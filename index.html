@@ -8,17 +8,19 @@
     </head>
     <body>
         <div id="container">
-            <label><h1>Byron David Cermeño Juárez</h1></label>
-            <textarea id="texto" rows="4" cols="50"></textarea>
-            <button id="analizar" onclick="analizando()">Analizar</button>
-            <p id="demo"></p>
+            <div class="form-group green-border-focus">
+                
+                <textarea class="form-control" id="texto" rows="3"></textarea>
+              </div>
+              <button type="button" class="btn btn-primary btn-lg btn-block" onclick="analizando()">Analizar</button>
+            
             <script>
                 function analizando(){
                     //var parser = require('./gramatica');
 
                     var x = document.getElementById("texto").value;
                     var parse = gramatica.parse(x);
-                    alert(parse.toString());
+                    alert(parse);
                     //document.getElementById("demo").innerHTML = x;
                     //console.log(x.toString());
                     //alert(x.toString());
@@ -28,8 +30,8 @@
 
         </div>
         <div class="jumbotron text-center" id="bootstrapStyle">
-            <h1>My First Bootstrap Page</h1>
-            <p>Resize this responsive page to see the effect!</p>
+            <h1>Primer Proyecto Compi2</h1>
+            <p>Byron David Cermeño Juárez - 201313734</p>
 
 
         </div>
