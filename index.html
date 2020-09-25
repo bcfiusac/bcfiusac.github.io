@@ -1,39 +1,127 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
-        <meta content="utf-8" http-equiv="encoding">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-        <script src="gramatica.js"></script>
-    </head>
-    <body>
-        <div id="container">
-            <div class="form-group green-border-focus">
-                
-                <textarea class="form-control" id="texto" rows="3"></textarea>
-              </div>
-              <button type="button" class="btn btn-primary btn-lg btn-block" onclick="analizando()">Analizar</button>
-            
-            <script>
-                function analizando(){
-                    //var parser = require('./gramatica');
 
-                    var x = document.getElementById("texto").value;
-                    var parse = gramatica.parse(x);
-                    alert(parse);
-                    //document.getElementById("demo").innerHTML = x;
-                    //console.log(x.toString());
-                    //alert(x.toString());
-}
-                
-            </script>
+<head>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+    <meta content="utf-8" http-equiv="encoding">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="gramatica.js"></script>
+    <script src="./Expresiones/Aritmeticas.js"></script>
+    <script src="./TabSymEnt/tabSym.js"></script>
+    <script src="./Expresiones/Declaracion.js"></script>
+    <script src="./Expresiones/Asignacion.js"></script>
+    <script src="./Expresiones/IncDec.js"></script>
+    <script src="./Expresiones/Imprimir.js"></script>
+    <script src="./Expresiones/Si.js"></script>
+    <script src="./Expresiones/While.js"></script>
+    <script src="./Expresiones/DoWhile.js"></script>
+    <script src="./Expresiones/Switch.js"></script>
+    <script src="./Expresiones/Caso.js"></script>
+    <script src="./Expresiones/For.js"></script>
+    <script src="./Expresiones/ParamE.js"></script>
+    <script src="./Expresiones/Funcion.js"></script>
+    <script src="./Expresiones/LlamarF.js"></script>
+    <script src="./Expresiones/Return.js"></script>
+    <script src="parser.js"></script>
+    
+</head>
 
+<body>
+    <script>
+        var contadorLinea = 0;
+        var contadorColumna = 1;
+        var pila = [];
+       
+    </script>
+    <div id="container">
+        <div class="form-group green-border-focus">
+
+            <textarea class="form-control" id="texto" rows="10" onkeydown="processe(event, this)"
+                onkeypress="process(event, this)"></textarea>
+            <h6>Fila <span id="spam" class="label label-default">0</span></h6>
+            <h6>Columna <span class="label label-default" id="columna">0</span></h6>
         </div>
-        <div class="jumbotron text-center" id="bootstrapStyle">
-            <h1>Primer Proyecto Compi2</h1>
-            <p>Byron David Cermeño Juárez - 201313734</p>
+        <button type="button" class="btn btn-primary btn-lg btn-block" onclick="analizando()">Analizar</button>
+        <button type="button" class="btn btn-primary btn-lg btn-block" onclick="cursor()">Cursor</button>
+
+        <script>
+            function analizando() {
+                var x = document.getElementById("texto").value;
+                Compilar(x);
+                //var parser = require('./gramatica');
+                
+                
+                //var parse = gramatica.parse(x);
+                //alert(parse);
+                //document.getElementById("demo").innerHTML = x;
+                //console.log(x.toString());
+                //alert(x.toString());
+            }
+            function cursor() {
+                var textarea = document.getElementById("texto");
+                var spammm = document.getElementById("spam");
+                textarea.focus();
+                //alert(textarea.selectionStart);
+                var posicionh = textarea.selectionStart;
+                document.getElementById("spam").innerHTML = textarea.selectionStart;
 
 
-        </div>
-    </body>
+            }
+            function processe(e) {
+                var code = (e.keyCode ? e.keyCode : e.which);
+                if (code == 8) {
+                    if (contadorLinea == 0 && contadorColumna > 0) {
+                        if(pila.length>0){//si la pila tiene valores
+                            //alert("LA PILA TODAVIA TIENE MAS DE 1 VALOR, TIENE--> " + pila.length);
+                            
+                            
+                            contadorLinea = pila[pila.length-1];
+                            document.getElementById("spam").innerHTML = contadorLinea;
+                            pila.pop();
+                        }
+                        else{
+                            //alert("LA PILA NO TIENE MAS DE 1 VALOR");
+
+                        }
+                        contadorColumna = contadorColumna - 1;
+                        document.getElementById("columna").innerHTML = contadorColumna;
+
+                    }
+                    else if (contadorLinea > 0) {
+                        contadorLinea = contadorLinea - 1;
+                        document.getElementById("spam").innerHTML = contadorLinea;
+                    }
+                }
+            }
+
+            function process(e) {
+                var code = (e.keyCode ? e.keyCode : e.which);
+                if (code == 13) { //Enter keycode
+                    pila.push(contadorLinea);
+                    //alert("Guardando en la pila el valor --> " + contadorLinea);
+                    contadorLinea = 0;
+                    document.getElementById("spam").innerHTML = contadorLinea;
+                    contadorColumna = contadorColumna + 1;
+                    document.getElementById("columna").innerHTML = contadorColumna;
+
+                }
+                else {
+                    contadorLinea = contadorLinea + 1;
+                    document.getElementById("spam").innerHTML = contadorLinea;
+                    
+
+                }
+            }
+
+        </script>
+
+    </div>
+    <div class="jumbotron text-center" id="bootstrapStyle">
+        <h1>Primer Proyecto Compi2</h1>
+        <p>Byron David Cermeño Juárez - 201313734</p>
+
+
+    </div>
+</body>
+
 </html>
