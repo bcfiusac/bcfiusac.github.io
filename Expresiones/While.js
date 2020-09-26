@@ -7,6 +7,8 @@ function While(expresion,sentencias){
 }
 
 function WhileD(Instruccion,tabSym){
+    //nueva tabla de simbolos acá
+    let res = null;
     probador = Instruccion;
     console.log("HOLA JEJEJEJE");
     sentencias = Instruccion.sentencias;
@@ -14,7 +16,19 @@ function WhileD(Instruccion,tabSym){
     validarCondicion = getValor(Instruccion.expresion,tabSym);
     if(validarCondicion){
         do{
-            arbolR(Instruccion.sentencias,tabSym);
+            res = arbolR(Instruccion.sentencias,tabSym);
+            if(res!=null){
+                if(res.Type===instruccionesC.Breik){
+                    break;
+                }
+                else if(res.Type===instruccionesC.Continuar){
+                    continue;
+                }
+                else if(res.Type===instruccionesC.Return){
+                    return res;
+                }
+            }
+            
         }
         while(getValor(Instruccion.expresion,tabSym))
     }

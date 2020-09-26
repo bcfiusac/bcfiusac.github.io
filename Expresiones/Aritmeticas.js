@@ -5,7 +5,7 @@ const primitivos = {
     Cadena: 'Cadena',
     Booleano: 'Booleano',
     Identificador: 'Identificador',
-    LLamarFuncion:'LLamarFuncion'
+    LLamarFuncion: 'LLamarFuncion'
 
 }
 const operacion = {
@@ -70,9 +70,9 @@ function getValor(exp, tabSym) {
         const var1tipo = getTipo(exp.var1, tabSym);
         const var2 = getValor(exp.var2, tabSym);
         const var2tipo = getTipo(exp.var2, tabSym);//obtenido el valor y tipo de los operandos
-        const var3 = getValor(exp.var3,tabSym);
-        const var3tipo=getTipo(exp.var3,tabSym);
-        if(exp.Type===operacion.Ternario){
+        const var3 = getValor(exp.var3, tabSym);
+        const var3tipo = getTipo(exp.var3, tabSym);
+        if (exp.Type === operacion.Ternario) {
             console.log("ESTOY EN EL TERNARIO");
         }
         else if (exp.Type === operacion.Suma) {//verifico que tipo de operacion es
@@ -1356,38 +1356,38 @@ function getValor(exp, tabSym) {
                 if (simbolingo.tipo === "Booleano") {
                     return !simbolingo.value;
                 }
-                else if(simbolingo.tipo==="Numero") {
-                    if(Number(simbolingo.value)>0){
+                else if (simbolingo.tipo === "Numero") {
+                    if (Number(simbolingo.value) > 0) {
                         return false;
                     }
-                    else{
+                    else {
                         return true;
                     }
-                    
+
                 }
-                else if(simbolingo.tipo==="Cadena"){
-                    if(simbolingo.value.length>0){
+                else if (simbolingo.tipo === "Cadena") {
+                    if (simbolingo.value.length > 0) {
                         return false;
                     }
-                    else{
+                    else {
                         return true;
                     }
                 }
 
             }
-            else if (var2tipo === primitivos.Numero ) {
-                if(Number(var2)>0){
+            else if (var2tipo === primitivos.Numero) {
+                if (Number(var2) > 0) {
                     return false;
                 }
-                else{
+                else {
                     return true;
                 }
             }
-            else if(var2tipo === primitivos.Cadena){
-                if(var2.length>0){
+            else if (var2tipo === primitivos.Cadena) {
+                if (var2.length > 0) {
                     return false;
                 }
-                else{
+                else {
                     return true;
                 }
             }
@@ -1444,50 +1444,50 @@ function getValor(exp, tabSym) {
         }
         else if (exp.Type === operacion.And) {
             //VAR1 ---- NUMERO
-            if(var1tipo=== primitivos.Numero){
-                if(var2tipo===primitivos.Numero){
-                    return Number(var1) && Number (var2);
+            if (var1tipo === primitivos.Numero) {
+                if (var2tipo === primitivos.Numero) {
+                    return Number(var1) && Number(var2);
                 }
-                else if(var2tipo===primitivos.Booleano){
+                else if (var2tipo === primitivos.Booleano) {
                     return Number(var1) && var2;
                 }
-                else if(var2tipo===primitivos.Cadena){
+                else if (var2tipo === primitivos.Cadena) {
                     return Number(var1) && var2;
                 }
-                else if(var2tipo===primitivos.Identificador){
+                else if (var2tipo === primitivos.Identificador) {
                     simbolingo = tabSym.getSimbolo(exp.var2.Value);
-                    if(simbolingo.tipo==="Numero"){
+                    if (simbolingo.tipo === "Numero") {
                         return Number(var1) && Number(simbolingo.value);
                     }
-                    else if(simbolingo.tipo==="Cadena"){
+                    else if (simbolingo.tipo === "Cadena") {
                         return Number(var1) && Number(simbolingo.value);
                     }
-                    else if(simbolingo.tipo==="Booleano"){
+                    else if (simbolingo.tipo === "Booleano") {
                         return Number(var1) && Number(simbolingo.value);
                     }
                 }
-                
+
             }
             //VAR1 ------ CADENA
-            else if(var1tipo===primitivos.Cadena){
-                if(var2tipo === primitivos.Numero){
+            else if (var1tipo === primitivos.Cadena) {
+                if (var2tipo === primitivos.Numero) {
                     return var1 && Number(var2);
                 }
-                else if(var2tipo===primitivos.Cadena){
+                else if (var2tipo === primitivos.Cadena) {
                     return var1 && var2;
                 }
-                else if(var2tipo===primitivos.Booleano){
+                else if (var2tipo === primitivos.Booleano) {
                     return var1 && var2;
                 }
-                else if(var2tipo===primitivos.Identificador){
+                else if (var2tipo === primitivos.Identificador) {
                     simbolingo = tabSym.getSimbolo(exp.var2.Value);
-                    if(simbolingo.tipo==="Numero"){
+                    if (simbolingo.tipo === "Numero") {
                         return var1 && Number(simbolingo.value);
                     }
-                    else if(simbolingo.tipo==="Cadena"){
+                    else if (simbolingo.tipo === "Cadena") {
                         return var1 && simbolingo.value;
                     }
-                    else if(simbolingo.tipo==="Booleano"){
+                    else if (simbolingo.tipo === "Booleano") {
                         return var1 && simbolingo.value;
                     }
                 }
@@ -1497,147 +1497,147 @@ function getValor(exp, tabSym) {
                 if (var2tipo === primitivos.Booleano) {
                     return var1 && var2;
                 }
-                else if(var2tipo===primitivos.Numero){
+                else if (var2tipo === primitivos.Numero) {
                     return var1 && Number(var2);
                 }
-                else if(var2tipo===primitivos.Cadena){
+                else if (var2tipo === primitivos.Cadena) {
                     return var1 && var2;
                 }
                 else if (var2tipo === primitivos.Identificador) {
                     simbolingo = tabSym.getSimbolo(exp.var2.Value);
-                    if(simbolingo.tipo==="Booleano"){
+                    if (simbolingo.tipo === "Booleano") {
                         return var1 && simbolingo.value;
                     }
-                    else if(simbolingo.tipo==="Numero"){
+                    else if (simbolingo.tipo === "Numero") {
                         return var1 && Number(simbolingo.value);
                     }
-                    else if(simbolingo.tipo==="Cadena"){
+                    else if (simbolingo.tipo === "Cadena") {
                         return var1 && var2;
                     }
                 }
             }
             //VAR1 ---------------- IDENTIFICADOR
-            else if(var1tipo===primitivos.Identificador){
+            else if (var1tipo === primitivos.Identificador) {
                 simbolingo1 = tabSym.getSimbolo(exp.var1.Value);
-                if(simbolingo1.tipo==="Numero"){
-                    if(var2tipo===primitivos.Numero){
+                if (simbolingo1.tipo === "Numero") {
+                    if (var2tipo === primitivos.Numero) {
                         return Number(simbolingo1.value) && Number(var2);
                     }
-                    else if(var2tipo===primitivos.Cadena){
+                    else if (var2tipo === primitivos.Cadena) {
                         return Number(simbolingo1.value) && var2;
                     }
-                    else if(var2tipo===primitivos.Booleano){
+                    else if (var2tipo === primitivos.Booleano) {
                         return Number(simbolingo1.value) && var2;
                     }
-                    else if(var2tipo===primitivos.Identificador){
+                    else if (var2tipo === primitivos.Identificador) {
                         simbolingo2 = tabSym.getSimbolo(exp.var2.Value);
-                        if(simbolingo2.tipo==="Numero"){
+                        if (simbolingo2.tipo === "Numero") {
                             return Number(simbolingo1.value) && Number(simbolingo2.value);
                         }
-                        else if(simbolingo2.tipo==="Cadena"){
+                        else if (simbolingo2.tipo === "Cadena") {
                             return Number(simbolingo1.value) && simbolingo2.value;
                         }
-                        else if(simbolingo2.tipo==="Booleano"){
+                        else if (simbolingo2.tipo === "Booleano") {
                             return Number(simbolingo1.value) && simbolingo2.value;
                         }
                     }
                 }
-                else if(simbolingo1.tipo==="Cadena"){
-                    if(var2tipo===primitivos.Numero){
+                else if (simbolingo1.tipo === "Cadena") {
+                    if (var2tipo === primitivos.Numero) {
                         return Number(simbolingo1.value) && Number(var2);
                     }
-                    else if(var2tipo===primitivos.Cadena){
+                    else if (var2tipo === primitivos.Cadena) {
                         return simbolingo1.value && var2;
                     }
-                    else if(var2tipo===primitivos.Booleano){
+                    else if (var2tipo === primitivos.Booleano) {
                         return simbolingo1.value && var2;
                     }
-                    else if(var2tipo===primitivos.Identificador){
+                    else if (var2tipo === primitivos.Identificador) {
                         simbolingo2 = tabSym.getSimbolo(exp.var2.Value);
-                        if(simbolingo2.tipo==="Numero"){
+                        if (simbolingo2.tipo === "Numero") {
                             return simbolingo1.value && Number(simbolingo2.value);
                         }
-                        else if(simbolingo2.tipo==="Cadena"){
+                        else if (simbolingo2.tipo === "Cadena") {
                             return simbolingo1.value && simbolingo2.value;
                         }
-                        else if(simbolingo2.tipo==="Booleano"){
+                        else if (simbolingo2.tipo === "Booleano") {
                             return simbolingo1.value && simbolingo2.value;
                         }
                     }
                 }
-                else if(simbolingo1.tipo==="Booleano"){
-                    if(var2tipo===primitivos.Numero){
+                else if (simbolingo1.tipo === "Booleano") {
+                    if (var2tipo === primitivos.Numero) {
                         return simbolingo1.value && Number(var2);
                     }
-                    else if(var2tipo===primitivos.Cadena){
+                    else if (var2tipo === primitivos.Cadena) {
                         return simbolingo1.value && var2;
                     }
-                    else if(var2tipo===primitivos.Booleano){
+                    else if (var2tipo === primitivos.Booleano) {
                         return simbolingo1.value && var2;
                     }
-                    else if(var2tipo===primitivos.Identificador){
+                    else if (var2tipo === primitivos.Identificador) {
                         simbolingo2 = tabSym.getSimbolo(exp.var2.Value);
-                        if(simbolingo2.tipo==="Numero"){
+                        if (simbolingo2.tipo === "Numero") {
                             return simbolingo1.value && Number(simbolingo2.value);
                         }
-                        else if(simbolingo2.tipo==="Cadena"){
+                        else if (simbolingo2.tipo === "Cadena") {
                             return simbolingo1.value && simbolingo2.value;
                         }
-                        else if(simbolingo2.tipo==="Booleano"){
+                        else if (simbolingo2.tipo === "Booleano") {
                             return simbolingo1.value && simbolingo2.value;
                         }
                     }
                 }
-                
+
             }
 
         }
         else if (exp.Type === operacion.Or) {
             //VAR1 ---- NUMERO
-            if(var1tipo=== primitivos.Numero){
-                if(var2tipo===primitivos.Numero){
-                    return Number(var1) || Number (var2);
+            if (var1tipo === primitivos.Numero) {
+                if (var2tipo === primitivos.Numero) {
+                    return Number(var1) || Number(var2);
                 }
-                else if(var2tipo===primitivos.Booleano){
+                else if (var2tipo === primitivos.Booleano) {
                     return Number(var1) || var2;
                 }
-                else if(var2tipo===primitivos.Cadena){
+                else if (var2tipo === primitivos.Cadena) {
                     return Number(var1) || var2;
                 }
-                else if(var2tipo===primitivos.Identificador){
+                else if (var2tipo === primitivos.Identificador) {
                     simbolingo = tabSym.getSimbolo(exp.var2.Value);
-                    if(simbolingo.tipo==="Numero"){
+                    if (simbolingo.tipo === "Numero") {
                         return Number(var1) || Number(simbolingo.value);
                     }
-                    else if(simbolingo.tipo==="Cadena"){
+                    else if (simbolingo.tipo === "Cadena") {
                         return Number(var1) || Number(simbolingo.value);
                     }
-                    else if(simbolingo.tipo==="Booleano"){
+                    else if (simbolingo.tipo === "Booleano") {
                         return Number(var1) || Number(simbolingo.value);
                     }
                 }
-                
+
             }
             //VAR1 ------ CADENA
-            else if(var1tipo===primitivos.Cadena){
-                if(var2tipo === primitivos.Numero){
+            else if (var1tipo === primitivos.Cadena) {
+                if (var2tipo === primitivos.Numero) {
                     return var1 || Number(var2);
                 }
-                else if(var2tipo===primitivos.Cadena){
+                else if (var2tipo === primitivos.Cadena) {
                     return var1 || var2;
                 }
-                else if(var2tipo===primitivos.Booleano){
+                else if (var2tipo === primitivos.Booleano) {
                     return var1 || var2;
                 }
-                else if(var2tipo===primitivos.Identificador){
+                else if (var2tipo === primitivos.Identificador) {
                     simbolingo = tabSym.getSimbolo(exp.var2.Value);
-                    if(simbolingo.tipo==="Numero"){
+                    if (simbolingo.tipo === "Numero") {
                         return var1 || Number(simbolingo.value);
                     }
-                    else if(simbolingo.tipo==="Cadena"){
+                    else if (simbolingo.tipo === "Cadena") {
                         return var1 || simbolingo.value;
                     }
-                    else if(simbolingo.tipo==="Booleano"){
+                    else if (simbolingo.tipo === "Booleano") {
                         return var1 || simbolingo.value;
                     }
                 }
@@ -1647,98 +1647,98 @@ function getValor(exp, tabSym) {
                 if (var2tipo === primitivos.Booleano) {
                     return var1 || var2;
                 }
-                else if(var2tipo===primitivos.Numero){
+                else if (var2tipo === primitivos.Numero) {
                     return var1 || Number(var2);
                 }
-                else if(var2tipo===primitivos.Cadena){
+                else if (var2tipo === primitivos.Cadena) {
                     return var1 || var2;
                 }
                 else if (var2tipo === primitivos.Identificador) {
                     simbolingo = tabSym.getSimbolo(exp.var2.Value);
-                    if(simbolingo.tipo==="Booleano"){
+                    if (simbolingo.tipo === "Booleano") {
                         return var1 || simbolingo.value;
                     }
-                    else if(simbolingo.tipo==="Numero"){
+                    else if (simbolingo.tipo === "Numero") {
                         return var1 || Number(simbolingo.value);
                     }
-                    else if(simbolingo.tipo==="Cadena"){
+                    else if (simbolingo.tipo === "Cadena") {
                         return var1 || var2;
                     }
                 }
             }
             //VAR1 ---------------- IDENTIFICADOR
-            else if(var1tipo===primitivos.Identificador){
+            else if (var1tipo === primitivos.Identificador) {
                 simbolingo1 = tabSym.getSimbolo(exp.var1.Value);
-                if(simbolingo1.tipo==="Numero"){
-                    if(var2tipo===primitivos.Numero){
+                if (simbolingo1.tipo === "Numero") {
+                    if (var2tipo === primitivos.Numero) {
                         return Number(simbolingo1.value) || Number(var2);
                     }
-                    else if(var2tipo===primitivos.Cadena){
+                    else if (var2tipo === primitivos.Cadena) {
                         return Number(simbolingo1.value) || var2;
                     }
-                    else if(var2tipo===primitivos.Booleano){
+                    else if (var2tipo === primitivos.Booleano) {
                         return Number(simbolingo1.value) || var2;
                     }
-                    else if(var2tipo===primitivos.Identificador){
+                    else if (var2tipo === primitivos.Identificador) {
                         simbolingo2 = tabSym.getSimbolo(exp.var2.Value);
-                        if(simbolingo2.tipo==="Numero"){
+                        if (simbolingo2.tipo === "Numero") {
                             return Number(simbolingo1.value) || Number(simbolingo2.value);
                         }
-                        else if(simbolingo2.tipo==="Cadena"){
+                        else if (simbolingo2.tipo === "Cadena") {
                             return Number(simbolingo1.value) || simbolingo2.value;
                         }
-                        else if(simbolingo2.tipo==="Booleano"){
+                        else if (simbolingo2.tipo === "Booleano") {
                             return Number(simbolingo1.value) || simbolingo2.value;
                         }
                     }
                 }
-                else if(simbolingo1.tipo==="Cadena"){
-                    if(var2tipo===primitivos.Numero){
+                else if (simbolingo1.tipo === "Cadena") {
+                    if (var2tipo === primitivos.Numero) {
                         return Number(simbolingo1.value) || Number(var2);
                     }
-                    else if(var2tipo===primitivos.Cadena){
+                    else if (var2tipo === primitivos.Cadena) {
                         return simbolingo1.value || var2;
                     }
-                    else if(var2tipo===primitivos.Booleano){
+                    else if (var2tipo === primitivos.Booleano) {
                         return simbolingo1.value || var2;
                     }
-                    else if(var2tipo===primitivos.Identificador){
+                    else if (var2tipo === primitivos.Identificador) {
                         simbolingo2 = tabSym.getSimbolo(exp.var2.Value);
-                        if(simbolingo2.tipo==="Numero"){
+                        if (simbolingo2.tipo === "Numero") {
                             return simbolingo1.value || Number(simbolingo2.value);
                         }
-                        else if(simbolingo2.tipo==="Cadena"){
+                        else if (simbolingo2.tipo === "Cadena") {
                             return simbolingo1.value || simbolingo2.value;
                         }
-                        else if(simbolingo2.tipo==="Booleano"){
+                        else if (simbolingo2.tipo === "Booleano") {
                             return simbolingo1.value || simbolingo2.value;
                         }
                     }
                 }
-                else if(simbolingo1.tipo==="Booleano"){
-                    if(var2tipo===primitivos.Numero){
+                else if (simbolingo1.tipo === "Booleano") {
+                    if (var2tipo === primitivos.Numero) {
                         return simbolingo1.value || Number(var2);
                     }
-                    else if(var2tipo===primitivos.Cadena){
+                    else if (var2tipo === primitivos.Cadena) {
                         return simbolingo1.value || var2;
                     }
-                    else if(var2tipo===primitivos.Booleano){
+                    else if (var2tipo === primitivos.Booleano) {
                         return simbolingo1.value || var2;
                     }
-                    else if(var2tipo===primitivos.Identificador){
+                    else if (var2tipo === primitivos.Identificador) {
                         simbolingo2 = tabSym.getSimbolo(exp.var2.Value);
-                        if(simbolingo2.tipo==="Numero"){
+                        if (simbolingo2.tipo === "Numero") {
                             return simbolingo1.value || Number(simbolingo2.value);
                         }
-                        else if(simbolingo2.tipo==="Cadena"){
+                        else if (simbolingo2.tipo === "Cadena") {
                             return simbolingo1.value || simbolingo2.value;
                         }
-                        else if(simbolingo2.tipo==="Booleano"){
+                        else if (simbolingo2.tipo === "Booleano") {
                             return simbolingo1.value || simbolingo2.value;
                         }
                     }
                 }
-                
+
             }
 
         }
@@ -1747,9 +1747,9 @@ function getValor(exp, tabSym) {
     }
 
 
-    else if(exp.Type===primitivos.LLamarFuncion){
+    else if (exp.Type === primitivos.LLamarFuncion) {
         console.log("ENCONTRE UN OPERADOR DE TIPO FUNCION");
-        ahora = getValorFuncion(exp.Value,tabSym);
+        ahora = getValorFuncion(exp.Value, tabSym);
         return ahora;
     }
 
@@ -1763,19 +1763,19 @@ function getValor(exp, tabSym) {
         return exp.Value;
     }
     else if (exp.Type === primitivos.Identificador) {
-        if(tabSym.Anterior){
+        
             //la tabla tiene un padre
             temporal = tabSym;
-            while(temporal!=null){
+            while (temporal != null) {
                 simbolingo = temporal.getSimbolo(exp.Value);
-                if(simbolingo==="ERROR"){
+                if (simbolingo === "ERROR") {
                     temporal = temporal.Anterior;
                 }
-                else{
-                    
+                else {
+
                     return simbolingo.value;
                 }
-                
+
             }
             /*temporalprueba = temporal;
             simbolillo = temporal.getSimbolo(exp.Value);
@@ -1785,13 +1785,8 @@ function getValor(exp, tabSym) {
             else{
                 console.log("VARIABLE TODAVIA NO DECLARADA EN LOS ENTORNOS ACTUALES");
             }*/
-        }
-        else{
-            //es la tabla global
-            simbolingo = tabSym.getSimbolo(exp.Value);
-            return simbolingo.value;
-        }
         
+
     }
 
 
@@ -2290,50 +2285,50 @@ function getTipo(exp, tabSym) {
         }
         else if (exp.Type === operacion.And) {
             //VAR1 ---- NUMERO
-            if(var1tipo=== primitivos.Numero){
-                if(var2tipo===primitivos.Numero){
+            if (var1tipo === primitivos.Numero) {
+                if (var2tipo === primitivos.Numero) {
                     return primitivos.Numero;
                 }
-                else if(var2tipo===primitivos.Booleano){
+                else if (var2tipo === primitivos.Booleano) {
                     return primitivos.Booleano;
                 }
-                else if(var2tipo===primitivos.Cadena){
+                else if (var2tipo === primitivos.Cadena) {
                     return primitivos.Cadena;
                 }
-                else if(var2tipo===primitivos.Identificador){
+                else if (var2tipo === primitivos.Identificador) {
                     simbolingo = tabSym.getSimbolo(exp.var2.Value);
-                    if(simbolingo.tipo==="Numero"){
+                    if (simbolingo.tipo === "Numero") {
                         return primitivos.Numero;
                     }
-                    else if(simbolingo.tipo==="Cadena"){
+                    else if (simbolingo.tipo === "Cadena") {
                         return primitivos.Cadena;
                     }
-                    else if(simbolingo.tipo==="Booleano"){
+                    else if (simbolingo.tipo === "Booleano") {
                         return primitivos.Booleano;
                     }
                 }
-                
+
             }
             //VAR1 ------ CADENA
-            else if(var1tipo===primitivos.Cadena){
-                if(var2tipo === primitivos.Numero){
+            else if (var1tipo === primitivos.Cadena) {
+                if (var2tipo === primitivos.Numero) {
                     return primitivos.Numero;
                 }
-                else if(var2tipo===primitivos.Cadena){
+                else if (var2tipo === primitivos.Cadena) {
                     return primitivos.Cadena;
                 }
-                else if(var2tipo===primitivos.Booleano){
+                else if (var2tipo === primitivos.Booleano) {
                     return primitivos.Booleano;
                 }
-                else if(var2tipo===primitivos.Identificador){
+                else if (var2tipo === primitivos.Identificador) {
                     simbolingo = tabSym.getSimbolo(exp.var2.Value);
-                    if(simbolingo.tipo==="Numero"){
+                    if (simbolingo.tipo === "Numero") {
                         return primitivos.Numero;
                     }
-                    else if(simbolingo.tipo==="Cadena"){
+                    else if (simbolingo.tipo === "Cadena") {
                         return var1 || simbolingo.value;
                     }
-                    else if(simbolingo.tipo==="Booleano"){
+                    else if (simbolingo.tipo === "Booleano") {
                         return var1 || simbolingo.value;
                     }
                 }
@@ -2343,146 +2338,146 @@ function getTipo(exp, tabSym) {
                 if (var2tipo === primitivos.Booleano) {
                     return primitivos.Booleano;
                 }
-                else if(var2tipo===primitivos.Numero){
+                else if (var2tipo === primitivos.Numero) {
                     return primitivos.Booleano;
                 }
-                else if(var2tipo===primitivos.Cadena){
+                else if (var2tipo === primitivos.Cadena) {
                     return primitivos.Booleano;
                 }
                 else if (var2tipo === primitivos.Identificador) {
                     simbolingo = tabSym.getSimbolo(exp.var2.Value);
-                    if(simbolingo.tipo==="Booleano"){
+                    if (simbolingo.tipo === "Booleano") {
                         return primitivos.Booleano;
                     }
-                    else if(simbolingo.tipo==="Numero"){
+                    else if (simbolingo.tipo === "Numero") {
                         return primitivos.Booleano;
                     }
-                    else if(simbolingo.tipo==="Cadena"){
+                    else if (simbolingo.tipo === "Cadena") {
                         return primitivos.Booleano;
                     }
                 }
             }
             //VAR1 ---------------- IDENTIFICADOR
-            else if(var1tipo===primitivos.Identificador){
+            else if (var1tipo === primitivos.Identificador) {
                 simbolingo1 = tabSym.getSimbolo(exp.var1.Value);
-                if(simbolingo1.tipo==="Numero"){
-                    if(var2tipo===primitivos.Numero){
+                if (simbolingo1.tipo === "Numero") {
+                    if (var2tipo === primitivos.Numero) {
                         return primitivos.Numero;
                     }
-                    else if(var2tipo===primitivos.Cadena){
+                    else if (var2tipo === primitivos.Cadena) {
                         return primitivos.Cadena;
                     }
-                    else if(var2tipo===primitivos.Booleano){
+                    else if (var2tipo === primitivos.Booleano) {
                         return primitivos.Booleano;
                     }
-                    else if(var2tipo===primitivos.Identificador){
+                    else if (var2tipo === primitivos.Identificador) {
                         simbolingo2 = tabSym.getSimbolo(exp.var2.Value);
-                        if(simbolingo2.tipo==="Numero"){
+                        if (simbolingo2.tipo === "Numero") {
                             return primitivos.Numero;
                         }
-                        else if(simbolingo2.tipo==="Cadena"){
+                        else if (simbolingo2.tipo === "Cadena") {
                             return primitivos.Cadena;
                         }
-                        else if(simbolingo2.tipo==="Booleano"){
+                        else if (simbolingo2.tipo === "Booleano") {
                             return primitivos.Booleano;
                         }
                     }
                 }
-                else if(simbolingo1.tipo==="Cadena"){
-                    if(var2tipo===primitivos.Numero){
+                else if (simbolingo1.tipo === "Cadena") {
+                    if (var2tipo === primitivos.Numero) {
                         return primitivos.Numero;
                     }
-                    else if(var2tipo===primitivos.Cadena){
+                    else if (var2tipo === primitivos.Cadena) {
                         return primitivos.Cadena;
                     }
-                    else if(var2tipo===primitivos.Booleano){
+                    else if (var2tipo === primitivos.Booleano) {
                         return primitivos.Booleano;
                     }
-                    else if(var2tipo===primitivos.Identificador){
+                    else if (var2tipo === primitivos.Identificador) {
                         simbolingo2 = tabSym.getSimbolo(exp.var2.Value);
-                        if(simbolingo2.tipo==="Numero"){
+                        if (simbolingo2.tipo === "Numero") {
                             return primitivos.Numero;
                         }
-                        else if(simbolingo2.tipo==="Cadena"){
+                        else if (simbolingo2.tipo === "Cadena") {
                             return primitivos.Cadena;
                         }
-                        else if(simbolingo2.tipo==="Booleano"){
+                        else if (simbolingo2.tipo === "Booleano") {
                             return primitivos.Booleano;
                         }
                     }
                 }
-                else if(simbolingo1.tipo==="Booleano"){
-                    if(var2tipo===primitivos.Numero){
+                else if (simbolingo1.tipo === "Booleano") {
+                    if (var2tipo === primitivos.Numero) {
                         return primitivos.Booleano;
                     }
-                    else if(var2tipo===primitivos.Cadena){
+                    else if (var2tipo === primitivos.Cadena) {
                         return primitivos.Cadena;
                     }
-                    else if(var2tipo===primitivos.Booleano){
+                    else if (var2tipo === primitivos.Booleano) {
                         return primitivos.Booleano;
                     }
-                    else if(var2tipo===primitivos.Identificador){
+                    else if (var2tipo === primitivos.Identificador) {
                         simbolingo2 = tabSym.getSimbolo(exp.var2.Value);
-                        if(simbolingo2.tipo==="Numero"){
+                        if (simbolingo2.tipo === "Numero") {
                             return primitivos.Numero;
                         }
-                        else if(simbolingo2.tipo==="Cadena"){
+                        else if (simbolingo2.tipo === "Cadena") {
                             return primitivos.Cadena;
                         }
-                        else if(simbolingo2.tipo==="Booleano"){
+                        else if (simbolingo2.tipo === "Booleano") {
                             return primitivos.Booleano;
                         }
                     }
                 }
-                
+
             }
         }
         else if (exp.Type === operacion.Or) {
             //VAR1 ---- NUMERO
-            if(var1tipo=== primitivos.Numero){
-                if(var2tipo===primitivos.Numero){
+            if (var1tipo === primitivos.Numero) {
+                if (var2tipo === primitivos.Numero) {
                     return primitivos.Numero;
                 }
-                else if(var2tipo===primitivos.Booleano){
+                else if (var2tipo === primitivos.Booleano) {
                     return primitivos.Booleano;
                 }
-                else if(var2tipo===primitivos.Cadena){
+                else if (var2tipo === primitivos.Cadena) {
                     return primitivos.Cadena;
                 }
-                else if(var2tipo===primitivos.Identificador){
+                else if (var2tipo === primitivos.Identificador) {
                     simbolingo = tabSym.getSimbolo(exp.var2.Value);
-                    if(simbolingo.tipo==="Numero"){
+                    if (simbolingo.tipo === "Numero") {
                         return primitivos.Numero;
                     }
-                    else if(simbolingo.tipo==="Cadena"){
+                    else if (simbolingo.tipo === "Cadena") {
                         return primitivos.Cadena;
                     }
-                    else if(simbolingo.tipo==="Booleano"){
+                    else if (simbolingo.tipo === "Booleano") {
                         return primitivos.Booleano;
                     }
                 }
-                
+
             }
             //VAR1 ------ CADENA
-            else if(var1tipo===primitivos.Cadena){
-                if(var2tipo === primitivos.Numero){
+            else if (var1tipo === primitivos.Cadena) {
+                if (var2tipo === primitivos.Numero) {
                     return primitivos.Numero;
                 }
-                else if(var2tipo===primitivos.Cadena){
+                else if (var2tipo === primitivos.Cadena) {
                     return primitivos.Cadena;
                 }
-                else if(var2tipo===primitivos.Booleano){
+                else if (var2tipo === primitivos.Booleano) {
                     return primitivos.Booleano;
                 }
-                else if(var2tipo===primitivos.Identificador){
+                else if (var2tipo === primitivos.Identificador) {
                     simbolingo = tabSym.getSimbolo(exp.var2.Value);
-                    if(simbolingo.tipo==="Numero"){
+                    if (simbolingo.tipo === "Numero") {
                         return primitivos.Numero;
                     }
-                    else if(simbolingo.tipo==="Cadena"){
+                    else if (simbolingo.tipo === "Cadena") {
                         return var1 || simbolingo.value;
                     }
-                    else if(simbolingo.tipo==="Booleano"){
+                    else if (simbolingo.tipo === "Booleano") {
                         return var1 || simbolingo.value;
                     }
                 }
@@ -2492,98 +2487,98 @@ function getTipo(exp, tabSym) {
                 if (var2tipo === primitivos.Booleano) {
                     return primitivos.Booleano;
                 }
-                else if(var2tipo===primitivos.Numero){
+                else if (var2tipo === primitivos.Numero) {
                     return primitivos.Booleano;
                 }
-                else if(var2tipo===primitivos.Cadena){
+                else if (var2tipo === primitivos.Cadena) {
                     return primitivos.Booleano;
                 }
                 else if (var2tipo === primitivos.Identificador) {
                     simbolingo = tabSym.getSimbolo(exp.var2.Value);
-                    if(simbolingo.tipo==="Booleano"){
+                    if (simbolingo.tipo === "Booleano") {
                         return primitivos.Booleano;
                     }
-                    else if(simbolingo.tipo==="Numero"){
+                    else if (simbolingo.tipo === "Numero") {
                         return primitivos.Booleano;
                     }
-                    else if(simbolingo.tipo==="Cadena"){
+                    else if (simbolingo.tipo === "Cadena") {
                         return primitivos.Booleano;
                     }
                 }
             }
             //VAR1 ---------------- IDENTIFICADOR
-            else if(var1tipo===primitivos.Identificador){
+            else if (var1tipo === primitivos.Identificador) {
                 simbolingo1 = tabSym.getSimbolo(exp.var1.Value);
-                if(simbolingo1.tipo==="Numero"){
-                    if(var2tipo===primitivos.Numero){
+                if (simbolingo1.tipo === "Numero") {
+                    if (var2tipo === primitivos.Numero) {
                         return primitivos.Numero;
                     }
-                    else if(var2tipo===primitivos.Cadena){
+                    else if (var2tipo === primitivos.Cadena) {
                         return primitivos.Cadena;
                     }
-                    else if(var2tipo===primitivos.Booleano){
+                    else if (var2tipo === primitivos.Booleano) {
                         return primitivos.Booleano;
                     }
-                    else if(var2tipo===primitivos.Identificador){
+                    else if (var2tipo === primitivos.Identificador) {
                         simbolingo2 = tabSym.getSimbolo(exp.var2.Value);
-                        if(simbolingo2.tipo==="Numero"){
+                        if (simbolingo2.tipo === "Numero") {
                             return primitivos.Numero;
                         }
-                        else if(simbolingo2.tipo==="Cadena"){
+                        else if (simbolingo2.tipo === "Cadena") {
                             return primitivos.Cadena;
                         }
-                        else if(simbolingo2.tipo==="Booleano"){
+                        else if (simbolingo2.tipo === "Booleano") {
                             return primitivos.Booleano;
                         }
                     }
                 }
-                else if(simbolingo1.tipo==="Cadena"){
-                    if(var2tipo===primitivos.Numero){
+                else if (simbolingo1.tipo === "Cadena") {
+                    if (var2tipo === primitivos.Numero) {
                         return primitivos.Numero;
                     }
-                    else if(var2tipo===primitivos.Cadena){
+                    else if (var2tipo === primitivos.Cadena) {
                         return primitivos.Cadena;
                     }
-                    else if(var2tipo===primitivos.Booleano){
+                    else if (var2tipo === primitivos.Booleano) {
                         return primitivos.Booleano;
                     }
-                    else if(var2tipo===primitivos.Identificador){
+                    else if (var2tipo === primitivos.Identificador) {
                         simbolingo2 = tabSym.getSimbolo(exp.var2.Value);
-                        if(simbolingo2.tipo==="Numero"){
+                        if (simbolingo2.tipo === "Numero") {
                             return primitivos.Numero;
                         }
-                        else if(simbolingo2.tipo==="Cadena"){
+                        else if (simbolingo2.tipo === "Cadena") {
                             return primitivos.Cadena;
                         }
-                        else if(simbolingo2.tipo==="Booleano"){
+                        else if (simbolingo2.tipo === "Booleano") {
                             return primitivos.Booleano;
                         }
                     }
                 }
-                else if(simbolingo1.tipo==="Booleano"){
-                    if(var2tipo===primitivos.Numero){
+                else if (simbolingo1.tipo === "Booleano") {
+                    if (var2tipo === primitivos.Numero) {
                         return primitivos.Booleano;
                     }
-                    else if(var2tipo===primitivos.Cadena){
+                    else if (var2tipo === primitivos.Cadena) {
                         return primitivos.Cadena;
                     }
-                    else if(var2tipo===primitivos.Booleano){
+                    else if (var2tipo === primitivos.Booleano) {
                         return primitivos.Booleano;
                     }
-                    else if(var2tipo===primitivos.Identificador){
+                    else if (var2tipo === primitivos.Identificador) {
                         simbolingo2 = tabSym.getSimbolo(exp.var2.Value);
-                        if(simbolingo2.tipo==="Numero"){
+                        if (simbolingo2.tipo === "Numero") {
                             return primitivos.Numero;
                         }
-                        else if(simbolingo2.tipo==="Cadena"){
+                        else if (simbolingo2.tipo === "Cadena") {
                             return primitivos.Cadena;
                         }
-                        else if(simbolingo2.tipo==="Booleano"){
+                        else if (simbolingo2.tipo === "Booleano") {
                             return primitivos.Booleano;
                         }
                     }
                 }
-                
+
             }
         }
         else if (exp.Type === operacion.Not) {
@@ -2597,14 +2592,14 @@ function getTipo(exp, tabSym) {
                 return console.error("error de tipos, no se puede encontrar el valor negativo a una cadena");
             }
         }
-        
+
 
 
 
     }
-    else if(exp.Type===primitivos.LLamarFuncion){
+    else if (exp.Type === primitivos.LLamarFuncion) {
         //console.log("ENCONTRE UN OPERADOR DE TIPO FUNCION");
-        ahora = getTipoFuncion(exp.Value,tabSym);
+        ahora = getTipoFuncion(exp.Value, tabSym);
         return ahora;
         /*
         console.log("ENCONTRE UN OPERADOR DE TIPO FUNCION");
@@ -2622,34 +2617,30 @@ function getTipo(exp, tabSym) {
         return exp.Type;
     }
     else if (exp.Type === primitivos.Identificador) {
-        if(tabSym.Anterior){
-            //la tabla tiene un padre
-            temporal = tabSym;
-            while(temporal!=null){
-                simbolingo = temporal.getSimbolo(exp.Value);
-                if(simbolingo==="ERROR"){
-                    temporal = temporal.Anterior;
-                }
-                else{
-                    
-                    return simbolingo.tipo;
-                }
-                
+
+        //la tabla tiene un padre
+        temporal = tabSym;
+        while (temporal != null) {
+            simbolingo = temporal.getSimbolo(exp.Value);
+            if (simbolingo === "ERROR") {
+                temporal = temporal.Anterior;
             }
-            /*temporalprueba = temporal;
-            simbolillo = temporal.getSimbolo(exp.Value);
-            if(simbolillo) {
-                return simbolillo.tipo;
+            else {
+
+                return simbolingo.tipo;
             }
-            else{
-                console.log("VARIABLE TODAVIA NO DECLARADA EN LOS ENTORNOS ACTUALES");
-            }*/
+
+        }
+        /*temporalprueba = temporal;
+        simbolillo = temporal.getSimbolo(exp.Value);
+        if(simbolillo) {
+            return simbolillo.tipo;
         }
         else{
-            //es la tabla global
-            simbolingo = tabSym.getSimbolo(exp.Value);
-            return simbolingo.tipo;
-        }
+            console.log("VARIABLE TODAVIA NO DECLARADA EN LOS ENTORNOS ACTUALES");
+        }*/
+
+
     }
 
 

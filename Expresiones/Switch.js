@@ -14,12 +14,17 @@ tipoBuscado = getTipo(Instruccion.expresion,tabSym);
 console.log("hola");
 contadorDefaults=0;
 bandera = 0;
+banderabreik = false;
 match = 0;
 breik = -1;
 for(let i = 0;i<Instruccion.casos.length;i++){
     if(Instruccion.casos[i].expresion===0){
         console.log("ENCONTRE UN DEFAULT");
         contadorDefaults++;
+            
+    }
+    else if(banderabreik){
+        break;
     }
     else{
         valorCase = getValor(Instruccion.casos[i].expresion,tabSym);
@@ -29,13 +34,19 @@ for(let i = 0;i<Instruccion.casos.length;i++){
             bandera = true;//la instrucción que hace match
             //arbolR(Instruccion.casos[i].sentencias,tabSym);
             for(let x = 0;x<Instruccion.casos[i].sentencias.length;x++){
-                if(Instruccion.casos[i].sentencias[x]==="break"){
+                if(Instruccion.casos[i].sentencias[x].Type===instruccionesC.Breik){
                     console.log("HE ENCONTRADO UN BREAK DENTRO DEL CASE");
+                    banderabreik = true;
                     break;
+                    
                 }
+                else if(Instruccion.casos[i].sentencias[x].Type===instruccionesC.Continuar || Instruccion.casos[i].sentencias[x].Type===instruccionesC.Return){
+                    return Instruccion.casos[i].sentencias[x];
+                }
+            
                 else{
                     //EJECUTO LA INSTRUCCION PORQUE NO ES UN BREAK
-                    arbolRSingle(Instruccion.casos[i].sentencias[x],tabSym);
+                    arbolR([Instruccion.casos[i].sentencias[x]],tabSym);
                     //arbolR(Instruccion.casos[i].sentencias[x],tabSym);
                 }
             }

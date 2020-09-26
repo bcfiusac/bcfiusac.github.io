@@ -123,7 +123,7 @@ sentencias: sentencias sentencia {$1.push($2);$$ = $1;}| sentencia {$$ = [$1];}|
 //-------------ASIGNACION - DECLARACIÓN DE VARIABLES SIMPLES
 TipoVar : Let {$$ = true;}| Const {$$ = false;};
 TiposVars: Number | Boolean | String | IDENTIFICADOR | Void;
-sentencia: decAsign PTCOMA {$$ = $1;} | Asignacion {$$ = $1;} | Print{$$ = $1;} | Funcion {$$=$1;} | Retorno {$$=$1;} | IFS {$$=$1;} | SUICH {$$=$1;} | Breik {$$=$1;} | LLamadaEjec PTCOMA {$$=$1;} | Continuar 
+sentencia: decAsign PTCOMA {$$ = $1;} | Asignacion {$$ = $1;} | Print{$$ = $1;} | Funcion {$$=$1;} | Retorno {$$=$1;} | IFS {$$=$1;} | SUICH {$$=$1;} | Breik {$$=$1;} | LLamadaEjec PTCOMA {$$=$1;} | Continuar {$$=$1;}
 		| IncDec PTCOMA {$$=$1;} | Wail {$$=$1;} |DuWail{$$=$1;} | ForNormal {$$=$1;} |ForOfIn| Grafica | MatrixSen | Tipos;
 Grafica: Graficar PARIZQ PARDER PTCOMA;
 																		//TIPOVAR - ID - TIPO - EXPRESION
@@ -152,7 +152,7 @@ Funcion: Function IDENTIFICADOR PARIZQ ParamsEntrada PARDER DosPuntos TiposVars 
 		{$$=Funcion($2,$4,$7,$9);};//agregar tipo de funcion
 Retorno: Return ContReturn PTCOMA {$$=Return($2);};
 ContReturn: expresion {$$=$1;}| ;
-Continuar: continue PTCOMA;
+Continuar: Continue PTCOMA {$$=Continuar();};
 
 //Arreglo: Let IDENTIFICADOR DosPuntos TiposVars Dimensiones igual CORIZQ CORDER;
 Dimensiones: Dimensiones Dimension | Dimension;
@@ -174,9 +174,9 @@ SUICH: Switch PARIZQ expresion PARDER LlaveI Casos LLaveD {$$=Switch($3,$6);};
 //CasosDef: Casos Defaultt {$1.push($2);$$=$1;}| Casos {$$=[$1];}| Defaultt {$$=[$1];}|;
 //Defaultt: Default DosPuntos LlaveI sentencias LLaveD {$$=Caso($4,0);};
 Casos: Casos Caso {$1.push($2);$$=$1;}| Caso {$$=[$1];};
-Caso: Case expresion DosPuntos LlaveI sentencias LLaveD {$$ = Caso($2,$5);}
+Caso: Case expresion DosPuntos LlaveI sentencias LLaveD {$$ = Caso($2,$5);console.log($$);}
 	| Default DosPuntos LlaveI sentencias LLaveD {$$=Caso(0,$4);};
-Breik: Break PTCOMA {$$=$1;};
+Breik: Break PTCOMA {$$=Breik();};
 //------------SENTENCIA WHILE
 Wail: While PARIZQ expresion PARDER LlaveI sentencias LLaveD {$$=While($3,$6);};
 //------------SENTENCIA DO WHILE

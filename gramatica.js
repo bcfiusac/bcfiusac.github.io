@@ -75,8 +75,8 @@ var gramatica = (function(){
 var o=function(k,v,o,l){for(o=o||{},l=k.length;l--;o[k[l]]=v);return o},$V0=[1,4],$V1=[1,37],$V2=[1,38],$V3=[1,24],$V4=[1,35],$V5=[1,36],$V6=[1,25],$V7=[1,26],$V8=[1,27],$V9=[1,31],$Va=[1,28],$Vb=[1,29],$Vc=[1,30],$Vd=[1,32],$Ve=[1,33],$Vf=[1,34],$Vg=[5,8,9,14,35,47,49,55,58,60,62,69,73,78,79,80,81],$Vh=[1,46],$Vi=[1,51],$Vj=[1,52],$Vk=[1,54],$Vl=[1,63],$Vm=[1,70],$Vn=[1,59],$Vo=[1,60],$Vp=[1,61],$Vq=[1,62],$Vr=[1,67],$Vs=[1,68],$Vt=[1,69],$Vu=[1,80],$Vv=[1,81],$Vw=[37,46],$Vx=[17,37],$Vy=[14,36,91,105,106,107,110,111,112],$Vz=[17,37,38,39,46,49,56,63,64,72,91,92,93,94,95,96,97,98,99,100,101,102,103,104],$VA=[1,105],$VB=[1,92],$VC=[1,91],$VD=[1,93],$VE=[1,94],$VF=[1,95],$VG=[1,96],$VH=[1,97],$VI=[1,98],$VJ=[1,99],$VK=[1,100],$VL=[1,101],$VM=[1,102],$VN=[1,103],$VO=[1,104],$VP=[17,37,38,46,49,64,72,91,92,93,94,95,96,97,98,99,100,101,102,103,104],$VQ=[1,123],$VR=[1,124],$VS=[1,132],$VT=[1,137],$VU=[2,7],$VV=[2,8],$VW=[2,9],$VX=[37,46,48,63],$VY=[17,37,39,46,63],$VZ=[17,37,38,46,49,64,72,91,92,97,98,99,100,101,102,103,104],$V_=[17,37,38,46,49,64,72,91,92,93,94,96,97,98,99,100,101,102,103,104],$V$=[17,37,38,46,49,64,72,101,102,103,104],$V01=[17,37,38,46,49,64,72,103,104],$V11=[1,181],$V21=[1,191],$V31=[1,200],$V41=[1,201],$V51=[1,202],$V61=[1,209],$V71=[1,210],$V81=[46,49],$V91=[5,8,9,14,35,47,49,55,58,60,62,69,70,73,78,79,80,81],$Va1=[49,76,77];
 var parser = {trace: function trace () { },
 yy: {},
-symbols_: {"error":2,"inicio":3,"sentencias":4,"EOF":5,"sentencia":6,"TipoVar":7,"Let":8,"Const":9,"TiposVars":10,"Number":11,"Boolean":12,"String":13,"IDENTIFICADOR":14,"Void":15,"decAsign":16,"PTCOMA":17,"Asignacion":18,"Print":19,"Funcion":20,"Retorno":21,"IFS":22,"SUICH":23,"Breik":24,"LLamadaEjec":25,"Continuar":26,"IncDec":27,"Wail":28,"DuWail":29,"ForNormal":30,"ForOfIn":31,"Grafica":32,"MatrixSen":33,"Tipos":34,"Graficar":35,"PARIZQ":36,"PARDER":37,"DosPuntos":38,"Igual":39,"expresion":40,"Dimensiones":41,"Dimension":42,"TipoDef":43,"ParamTipo":44,"ParamsTipo":45,"Coma":46,"Type":47,"LlaveI":48,"LLaveD":49,"signIncDec":50,"Incremento":51,"Decremento":52,"IgualMasIgual":53,"MasI":54,"Console":55,"Punto":56,"Log":57,"Function":58,"ParamsEntrada":59,"Return":60,"ContReturn":61,"continue":62,"CORIZQ":63,"CORDER":64,"FuncionExp":65,"Parametros":66,"ParamEntrada":67,"BloqueSentencias":68,"If":69,"Else":70,"IFT":71,"Ternario":72,"Switch":73,"Casos":74,"Caso":75,"Case":76,"Default":77,"Break":78,"While":79,"Do":80,"For":81,"OfIn":82,"Of":83,"In":84,"primero":85,"Var":86,"BarraInv":87,"ini":88,"instrucciones":89,"ExpComa":90,"MENOS":91,"MAS":92,"POR":93,"DIVIDIDO":94,"Potencia":95,"Modulo":96,"Menor":97,"Mayor":98,"MenorIgual":99,"MayorIgual":100,"Diferente":101,"Comparacion":102,"And":103,"Or":104,"Not":105,"ENTERO":106,"DECIMAL":107,"AccesoMatrix":108,"AccesoAtributo":109,"CADENA":110,"Trues":111,"Falses":112,"ListaExp":113,"DimensionesVal":114,"Length":115,"DimensionVal":116,"$accept":0,"$end":1},
-terminals_: {2:"error",5:"EOF",8:"Let",9:"Const",11:"Number",12:"Boolean",13:"String",14:"IDENTIFICADOR",15:"Void",17:"PTCOMA",35:"Graficar",36:"PARIZQ",37:"PARDER",38:"DosPuntos",39:"Igual",46:"Coma",47:"Type",48:"LlaveI",49:"LLaveD",51:"Incremento",52:"Decremento",54:"MasI",55:"Console",56:"Punto",57:"Log",58:"Function",60:"Return",62:"continue",63:"CORIZQ",64:"CORDER",69:"If",70:"Else",72:"Ternario",73:"Switch",76:"Case",77:"Default",78:"Break",79:"While",80:"Do",81:"For",83:"Of",84:"In",86:"Var",87:"BarraInv",89:"instrucciones",91:"MENOS",92:"MAS",93:"POR",94:"DIVIDIDO",95:"Potencia",96:"Modulo",97:"Menor",98:"Mayor",99:"MenorIgual",100:"MayorIgual",101:"Diferente",102:"Comparacion",103:"And",104:"Or",105:"Not",106:"ENTERO",107:"DECIMAL",110:"CADENA",111:"Trues",112:"Falses",115:"Length"},
+symbols_: {"error":2,"inicio":3,"sentencias":4,"EOF":5,"sentencia":6,"TipoVar":7,"Let":8,"Const":9,"TiposVars":10,"Number":11,"Boolean":12,"String":13,"IDENTIFICADOR":14,"Void":15,"decAsign":16,"PTCOMA":17,"Asignacion":18,"Print":19,"Funcion":20,"Retorno":21,"IFS":22,"SUICH":23,"Breik":24,"LLamadaEjec":25,"Continuar":26,"IncDec":27,"Wail":28,"DuWail":29,"ForNormal":30,"ForOfIn":31,"Grafica":32,"MatrixSen":33,"Tipos":34,"Graficar":35,"PARIZQ":36,"PARDER":37,"DosPuntos":38,"Igual":39,"expresion":40,"Dimensiones":41,"Dimension":42,"TipoDef":43,"ParamTipo":44,"ParamsTipo":45,"Coma":46,"Type":47,"LlaveI":48,"LLaveD":49,"signIncDec":50,"Incremento":51,"Decremento":52,"IgualMasIgual":53,"MasI":54,"Console":55,"Punto":56,"Log":57,"Function":58,"ParamsEntrada":59,"Return":60,"ContReturn":61,"Continue":62,"CORIZQ":63,"CORDER":64,"FuncionExp":65,"Parametros":66,"ParamEntrada":67,"BloqueSentencias":68,"If":69,"Else":70,"IFT":71,"Ternario":72,"Switch":73,"Casos":74,"Caso":75,"Case":76,"Default":77,"Break":78,"While":79,"Do":80,"For":81,"OfIn":82,"Of":83,"In":84,"primero":85,"Var":86,"BarraInv":87,"ini":88,"instrucciones":89,"ExpComa":90,"MENOS":91,"MAS":92,"POR":93,"DIVIDIDO":94,"Potencia":95,"Modulo":96,"Menor":97,"Mayor":98,"MenorIgual":99,"MayorIgual":100,"Diferente":101,"Comparacion":102,"And":103,"Or":104,"Not":105,"ENTERO":106,"DECIMAL":107,"AccesoMatrix":108,"AccesoAtributo":109,"CADENA":110,"Trues":111,"Falses":112,"ListaExp":113,"DimensionesVal":114,"Length":115,"DimensionVal":116,"$accept":0,"$end":1},
+terminals_: {2:"error",5:"EOF",8:"Let",9:"Const",11:"Number",12:"Boolean",13:"String",14:"IDENTIFICADOR",15:"Void",17:"PTCOMA",35:"Graficar",36:"PARIZQ",37:"PARDER",38:"DosPuntos",39:"Igual",46:"Coma",47:"Type",48:"LlaveI",49:"LLaveD",51:"Incremento",52:"Decremento",54:"MasI",55:"Console",56:"Punto",57:"Log",58:"Function",60:"Return",62:"Continue",63:"CORIZQ",64:"CORDER",69:"If",70:"Else",72:"Ternario",73:"Switch",76:"Case",77:"Default",78:"Break",79:"While",80:"Do",81:"For",83:"Of",84:"In",86:"Var",87:"BarraInv",89:"instrucciones",91:"MENOS",92:"MAS",93:"POR",94:"DIVIDIDO",95:"Potencia",96:"Modulo",97:"Menor",98:"Mayor",99:"MenorIgual",100:"MayorIgual",101:"Diferente",102:"Comparacion",103:"And",104:"Or",105:"Not",106:"ENTERO",107:"DECIMAL",110:"CADENA",111:"Trues",112:"Falses",115:"Length"},
 productions_: [0,[3,2],[4,2],[4,1],[4,1],[7,1],[7,1],[10,1],[10,1],[10,1],[10,1],[10,1],[6,2],[6,1],[6,1],[6,1],[6,1],[6,1],[6,1],[6,1],[6,2],[6,1],[6,2],[6,1],[6,1],[6,1],[6,1],[6,1],[6,1],[6,1],[32,4],[16,6],[16,6],[16,6],[16,4],[16,8],[43,1],[43,1],[43,1],[44,3],[44,3],[45,3],[45,1],[34,7],[27,2],[50,1],[50,1],[18,4],[53,1],[53,1],[19,7],[20,10],[21,3],[61,1],[61,0],[26,2],[41,2],[41,1],[42,2],[65,4],[66,3],[66,1],[59,3],[59,1],[59,0],[67,3],[67,4],[68,3],[68,2],[22,7],[22,7],[22,5],[71,6],[23,7],[74,2],[74,1],[75,6],[75,5],[24,2],[28,7],[29,9],[30,11],[31,10],[82,1],[82,1],[85,7],[88,2],[90,3],[90,1],[40,2],[40,3],[40,3],[40,3],[40,3],[40,3],[40,3],[40,3],[40,3],[40,3],[40,3],[40,3],[40,3],[40,3],[40,3],[40,2],[40,1],[40,1],[40,1],[40,1],[40,1],[40,1],[40,1],[40,1],[40,1],[40,3],[40,5],[113,3],[113,1],[113,0],[25,4],[108,2],[108,3],[108,4],[109,3],[114,2],[114,1],[116,3],[33,5],[33,5]],
 performAction: function anonymous(yytext, yyleng, yylineno, yy, yystate /* action[1] */, $$ /* vstack */, _$ /* lstack */) {
 /* this == yyval */
@@ -107,10 +107,10 @@ break;
 case 13: case 14:
 this.$ = $$[$0];
 break;
-case 15: case 16: case 17: case 18: case 19: case 23: case 24: case 25: case 53:
+case 15: case 16: case 17: case 18: case 19: case 21: case 23: case 24: case 25: case 53:
 this.$=$$[$0];
 break;
-case 20: case 22: case 67: case 78:
+case 20: case 22: case 67:
 this.$=$$[$0-1];
 break;
 case 31: case 32:
@@ -136,6 +136,9 @@ this.$=Funcion($$[$0-8],$$[$0-6],$$[$0-3],$$[$0-1]);
 break;
 case 52:
 this.$=Return($$[$0-1]);
+break;
+case 55:
+this.$=Continuar();
 break;
 case 62: case 116:
 $$[$0-2].push($$[$0]);this.$=$$[$0-2];
@@ -168,10 +171,13 @@ case 74:
 $$[$0-1].push($$[$0]);this.$=$$[$0-1];
 break;
 case 76:
-this.$ = Caso($$[$0-4],$$[$0-1]);
+this.$ = Caso($$[$0-4],$$[$0-1]);console.log(this.$);
 break;
 case 77:
 this.$=Caso(0,$$[$0-1]);
+break;
+case 78:
+this.$=Breik();
 break;
 case 79:
 this.$=While($$[$0-4],$$[$0-1]);
@@ -954,7 +960,7 @@ case 57:return 78;
 break;
 case 58:return 76;
 break;
-case 59:return 'Continue';
+case 59:return 62;
 break;
 case 60:return 80;
 break;
