@@ -45,11 +45,12 @@ function getValorFuncion(Instruccion, tabSym) {
     //Instruccion.listaexp[i] ---- parametros enviados para la funcion
     if (funcion.parametros.length === Valores) {//SI LA CANTIDAD DE PARAMETROS COINCIDEN
         for (let x = 0; x < Valores; x++) {
-            if (funcion.parametros[x].tipo === "number" && getTipo(Instruccion.listaexp[x]) === "Numero"
-                || funcion.parametros[x].tipo === "string" && getTipo(Instruccion.listaexp[x]) === "Cadena" ||
-                funcion.parametros[x].tipo === "boolean" && getTipo(Instruccion.listaexp[x]) === "Booleano") {
-                valor = getValor(Instruccion.listaexp[x]);
-                tipo = getTipo(Instruccion.listaexp[x]);
+            const pax = getTipo(Instruccion.listaexp[x],tabSym);
+            if (funcion.parametros[x].tipo === "number" && getTipo(Instruccion.listaexp[x],tabSym) === "Numero"
+                || funcion.parametros[x].tipo === "string" && getTipo(Instruccion.listaexp[x],tabSym) === "Cadena" ||
+                funcion.parametros[x].tipo === "boolean" && getTipo(Instruccion.listaexp[x],tabSym) === "Booleano") {
+                valor = getValor(Instruccion.listaexp[x],tabSym);
+                tipo = getTipo(Instruccion.listaexp[x],tabSym);
                 if (valor === undefined) { }
                 else {
                     Declaraciones.push(Declaracion(true, funcion.parametros[x].id, funcion.parametros[x].tipo, Instruccion.listaexp[x]));
@@ -125,6 +126,7 @@ function getTipoFuncion(Instruccion, tabSym) {
 
     else {
         funcion = tabSym.getFuncion(Instruccion.id);
+    }
         ahora = funcion;
         banderatipos = true;
         Declaraciones = [];
@@ -132,11 +134,11 @@ function getTipoFuncion(Instruccion, tabSym) {
         //Instruccion.listaexp[i] ---- parametros enviados para la funcion
         if (funcion.parametros.length === Valores) {//SI LA CANTIDAD DE PARAMETROS COINCIDEN
             for (let x = 0; x < Valores; x++) {
-                if (funcion.parametros[x].tipo === "number" && getTipo(Instruccion.listaexp[x]) === "Numero"
-                    || funcion.parametros[x].tipo === "string" && getTipo(Instruccion.listaexp[x]) === "Cadena" ||
-                    funcion.parametros[x].tipo === "boolean" && getTipo(Instruccion.listaexp[x]) === "Booleano") {
-                    valor = getValor(Instruccion.listaexp[x]);
-                    tipo = getTipo(Instruccion.listaexp[x]);
+                if (funcion.parametros[x].tipo === "number" && getTipo(Instruccion.listaexp[x],tabSym) === "Numero"
+                    || funcion.parametros[x].tipo === "string" && getTipo(Instruccion.listaexp[x],tabSym) === "Cadena" ||
+                    funcion.parametros[x].tipo === "boolean" && getTipo(Instruccion.listaexp[x],tabSym) === "Booleano") {
+                    valor = getValor(Instruccion.listaexp[x],tabSym);
+                    tipo = getTipo(Instruccion.listaexp[x],tabSym);
                     if (valor === undefined) { }
                     else {
                         Declaraciones.push(Declaracion(true, funcion.parametros[x].id, funcion.parametros[x].tipo, Instruccion.listaexp[x]));
@@ -175,6 +177,6 @@ function getTipoFuncion(Instruccion, tabSym) {
 
             }
         }
-    }
+    
 
 }
