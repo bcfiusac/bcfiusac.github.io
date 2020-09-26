@@ -25,6 +25,10 @@ class SymTable {
         this.Anterior = Anterior;
 
     }
+    setearReturn(Variable,tabSym){
+        const newSymbol = Symbol(1, tabSym, Variable, 0);
+        this.Symbol.push(newSymbol);
+    }
     //metodo para agregar simbolo a la tabla
     setearSymbol(tipo, id, value, editar) {
         const newSymbol = Symbol(tipo, id, value, editar);

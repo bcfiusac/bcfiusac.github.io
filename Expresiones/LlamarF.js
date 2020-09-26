@@ -11,7 +11,7 @@ function LlamarFD(Instruccion,tabSym){
 
 }
 function getValorFuncion(Instruccion,tabSym){
-    const nueva = new SymTable([],[],tabSym);
+    nueva = new SymTable([],[],tabSym); //le quité la constante porque sino no puedo agregarle el return :'v
     Valores = Instruccion.listaexp.length;
     funcion =0;
     tempo = tabSym;
@@ -65,10 +65,20 @@ function getValorFuncion(Instruccion,tabSym){
                 ahoraxd = Declaraciones;
                 arbolR(Declaraciones,nueva);
                 ahora = nueva;
-                xd = arbolR(funcion.sentencias,nueva);
-                aver = getValor(xd,nueva);
-                console.log("xdxdxdsd");
-                return aver;
+                arbolR(funcion.sentencias,nueva);
+                for(let x =0;x<nueva.Symbol.length;x++){
+                    if(nueva.Symbol[x].editar === 0 && nueva.Symbol[x].tipo===1){
+                        //viene un return
+                        valor = nueva.Symbol[x].value.Type;
+                        return getValor(nueva.Symbol[x].value,nueva);
+                    }
+                }
+                console.log("byron");
+                //byron = nueva;
+                //abc = xd;
+                //aver = getValor(xd,nueva);
+                //console.log("xdxdxdsd");
+                //return aver;
                 //xds = xd;
                 //nueva ES MI TABLA DE SIMBOLOS CON LOS PARAMETROS YA AGREGADOS
 
@@ -136,10 +146,20 @@ function getTipoFuncion(Instruccion,tabSym){
                 ahoraxd = Declaraciones;
                 arbolR(Declaraciones,nueva);
                 ahora = nueva;
-                xd = arbolR(funcion.sentencias,nueva);
-                aver = getTipo(xd,nueva);
-                console.log("xdxdxdsd");
-                return aver;
+                arbolR(funcion.sentencias,nueva);
+                for(let x =0;x<nueva.Symbol.length;x++){
+                    if(nueva.Symbol[x].editar === 0 && nueva.Symbol[x].tipo===1){
+                        //viene un return
+                        valor = nueva.Symbol[x].value.Type;
+                        return getTipo(nueva.Symbol[x].value,nueva);
+                    }
+                }
+                console.log("byron");
+                //byron = nueva;
+                //abc = xd;
+                //aver = getValor(xd,nueva);
+                //console.log("xdxdxdsd");
+                //return aver;
                 //xds = xd;
                 //nueva ES MI TABLA DE SIMBOLOS CON LOS PARAMETROS YA AGREGADOS
 

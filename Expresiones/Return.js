@@ -7,5 +7,6 @@ function Return(variable){
 
 function ReturnD(Instruccion,tabSym){
 console.log("VIENE UN RETURN");
+tabSym.setearReturn(Instruccion.variable,tabSym);
 return Instruccion.variable;
 }

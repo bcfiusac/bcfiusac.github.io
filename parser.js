@@ -12,7 +12,8 @@ For:'For',
 ParamE:'ParamE',
 Funcion: 'Funcion',
 LlamarF:'LlamarF',
-Return:'Return'
+Return:'Return',
+ObjetoRetorno:'ObjetoRetorno'
 
 }
 function Compilar(entrada){
@@ -48,9 +49,12 @@ function arbolR (instrucciones, tabSym){
             ImprimirD(instruccion,tabSym);
         }
         else if(instruccion.Type===instruccionesC.Si){
-            const nueva = new SymTable([],[],tabSym);
-            SiD(instruccion,nueva);
-            tabSym = nueva.Anterior;
+            //const nueva = new SymTable([],[],tabSym);
+            //tabSym = nueva;
+            //const nueva = new SymTable([],[],tabSym);
+            SiD(instruccion,tabSym);//cambie nueva por tabsym
+            //tabSym = nueva.Anterior;
+            
         }
         else if(instruccion.Type===instruccionesC.While){
             const nueva = new SymTable([],[],tabSym);
@@ -92,8 +96,8 @@ function arbolR (instrucciones, tabSym){
             
         }
         else if(instruccion.Type===instruccionesC.Return){
-            xd = ReturnD(instruccion,tabSym);
-            return xd;
+            tabSym.setearReturn(instruccion.variable,tabSym);
+            return ;
             
 
         }        
