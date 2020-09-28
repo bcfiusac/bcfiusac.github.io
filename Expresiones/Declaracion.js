@@ -15,34 +15,75 @@ function DeclaracionD(Instruccion, tabSym) {
         tipovarP = Instruccion.tipoVarP;
         if (Instruccion.valor.Type === "Ternario") {
             console.log("VIENE UNA DECLARACIÓN TERNARIA");
-            condicion = getValor(Instruccion.valor.var1, tabSym);
-            condicionTipo = getTipo(Instruccion.valor.var1, tabSym);
+            let condicion;
+            let condicionTipo;
+            if (Instruccion.valor.var1.Type === primitivos.LLamarFuncion) {
+                temp = getValor(Instruccion.valor.var1, tabSym);
+                condicion = temp.valor;
+                condicionTipo = temp.tipo;
+            }
+            else {
+                condicion = getValor(Instruccion.valor.var1, tabSym);
+                condicionTipo = getTipo(Instruccion.valor.var1, tabSym);
+            }
+
             if (condicion && condicionTipo === "Booleano") {
-                valorV = getValor(Instruccion.valor.var2, tabSym);
-                tipoV = getTipo(Instruccion.valor.var2, tabSym);
-                if((tipoV==="Numero"&&tipovarP==="number")||(tipoV==="Cadena"&&tipovarP==="string")||(tipoV==="Booleano"&&tipovarP==="boolean")){
+                let valorV;
+                let tipoV;
+                if (Instruccion.valor.var2.Type === primitivos.LLamarFuncion) {
+                    temp = getValor(Instruccion.valor.var2, tabSym);
+                    valorV = temp.valor;
+                    tipoV = temp.tipo;
+                }
+                else {
+                    valorV = getValor(Instruccion.valor.var2, tabSym);
+                    tipoV = getTipo(Instruccion.valor.var2, tabSym);
+                }
+
+                if ((tipoV === "Numero" && tipovarP === "number") || (tipoV === "Cadena" && tipovarP === "string") || (tipoV === "Booleano" && tipovarP === "boolean")) {
                     tabSym.setearSymbol(tipoV, Instruccion.id, valorV, Instruccion.tipoVar);
                 }
-                else{
+                else {
                     console.log("LOS TIPOS NO COINCIDEN - VARIABLE Y EXPRESION.");
                 }
-                
+
             }
             else if (condicion === false && condicionTipo === "Booleano") {
-                valorF = getValor(Instruccion.valor.var3, tabSym);
-                tipoF = getTipo(Instruccion.valor.var3, tabSym);
-                if((tipoF==="Numero"&&tipovarP==="number")||(tipoF==="Cadena"&&tipovarP==="string")||(tipoF==="Booleano"&&tipovarP==="boolean")){
+                let valorF;
+                let tipoF;
+                if (Instruccion.valor.var3.Type === primitivos.LLamarFuncion) {
+                    temp = getValor(Instruccion.valor.var3, tabSym);
+                    valorF = temp.valor;
+                    tipoF = temp.tipo;
+                }
+                else {
+                    valorF = getValor(Instruccion.valor.var3, tabSym);
+                    tipoF = getTipo(Instruccion.valor.var3, tabSym);
+                }
+
+                if ((tipoF === "Numero" && tipovarP === "number") || (tipoF === "Cadena" && tipovarP === "string") || (tipoF === "Booleano" && tipovarP === "boolean")) {
                     tabSym.setearSymbol(tipoF, Instruccion.id, valorF, Instruccion.tipoVar);
                 }
-                else{
+                else {
                     console.log("LOS TIPOS NO COINCIDEN - VARIABLE Y EXPRESION.");
                 }
 
 
             }
         } else {
-            const findValor = getValor(Instruccion.valor, tabSym);//encuentro el valor de la expresion
-            const findTipo = getTipo(Instruccion.valor, tabSym);//encuentro el tipo de la expresion final
+            let valor;
+            let tipo;
+            if (Instruccion.valor.Type === primitivos.LLamarFuncion) {
+                temp = getValor(Instruccion.valor,tabSym);
+                valor = temp.valor;
+                tipo = temp.tipo;
+            }
+            else {
+                valor = getValor(Instruccion.valor, tabSym);
+                tipo = getTipo(Instruccion.valor, tabSym);
+            }
+            const findValor = valor;//encuentro el valor de la expresion
+            const findTipo = tipo;//encuentro el tipo de la expresion final
             //metodos de validación para la tabla de simbolos
 
             if (findValor === undefined) {
@@ -73,7 +114,7 @@ function DeclaracionD(Instruccion, tabSym) {
 
 
                 }
-                else if ((tipovarP === "number"||tipovarP==="Numero") && findTipo === primitivos.Numero || (tipovarP === "string"||tipovarP==="Cadena") && findTipo === primitivos.Cadena || (tipovarP === "boolean"||tipovarP==="Booleano") && findTipo === primitivos.Booleano) {
+                else if ((tipovarP === "number" || tipovarP === "Numero") && findTipo === primitivos.Numero || (tipovarP === "string" || tipovarP === "Cadena") && findTipo === primitivos.Cadena || (tipovarP === "boolean" || tipovarP === "Booleano") && findTipo === primitivos.Booleano) {
                     console.log("coinciden los tipos");
                     tabSym.setearSymbol(findTipo, Instruccion.id, findValor, Instruccion.tipoVar);
                 }

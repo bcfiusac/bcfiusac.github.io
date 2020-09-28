@@ -8,24 +8,33 @@ function Symbol(tipo, id, value, editar) {
     }
 }
 
-function SymFun(id,parametros,tipoF,sentencias){
-    return{
-        id:id,
-        parametros:parametros,
-        tipoF:tipoF,
-        sentencias:sentencias
-    }    
-    
+function SymFun(id, parametros, tipoF, sentencias) {
+    return {
+        id: id,
+        parametros: parametros,
+        tipoF: tipoF,
+        sentencias: sentencias
+    }
+
+}
+function SymArr(tipoVar, id, tipo, valsdim) {
+    return {
+        tipoVar: tipoVar,
+        id: id,
+        tipo: tipo,
+        valsdim: valsdim
+    }
 }
 
 class SymTable {
-    constructor(Symbol,Funcion, Anterior) {
+    constructor(Symbol, Funcion, Arreglo, Anterior) {
         this.Symbol = Symbol;
         this.Funcion = Funcion;
+        this.Arreglo = Arreglo;
         this.Anterior = Anterior;
 
     }
-    setearReturn(Variable,tabSym){
+    setearReturn(Variable, tabSym) {
         const newSymbol = Symbol(1, tabSym, Variable, 0);
         this.Symbol.push(newSymbol);
     }
@@ -35,22 +44,33 @@ class SymTable {
         this.Symbol.push(newSymbol);
         //console.log("Guardado jeej");
     }
-    setearFuncion(id,parametros,tipoF,sentencias){
-        const newFuncion = SymFun(id,parametros,tipoF,sentencias);
+    setearFuncion(id, parametros, tipoF, sentencias) {
+        const newFuncion = SymFun(id, parametros, tipoF, sentencias);
         this.Funcion.push(newFuncion);
     }
-    getFuncion(identificador){
+    setearArreglo(tipoVar, id, tipo, valsdim) {
+        const newArreglo = SymArr(tipoVar, id, tipo, valsdim);
+        this.Arreglo.push(newArreglo);
+    }
+    getFuncion(identificador) {
         const funcion = this.Funcion.filter(funcion => funcion.id === identificador)[0];
-        if (funcion) return funcion;
+        if (funcion) {
+
+            return JSON.parse(JSON.stringify(funcion));
+        }
         else return "ERROR";
     }
     getSimbolo(identificador) {
         const simbolo = this.Symbol.filter(simbolo => simbolo.id === identificador)[0];
         if (simbolo) return simbolo;
         else return "ERROR";
-
-
     }
+    getArreglo(identificador) {
+        const arreglo = this.Arreglo.filter(arreglo => arreglo.id === identificador)[0];
+        if (arreglo) return arreglo;
+        else return "ERROR";
+    }
+
     ActSimbolo(identificador, Symbol) {
         for (let i = 0; i < this.Symbol.length; i++) {
             if (this.Symbol[i].id = identificador) {

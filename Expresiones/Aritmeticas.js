@@ -5,7 +5,8 @@ const primitivos = {
     Cadena: 'Cadena',
     Booleano: 'Booleano',
     Identificador: 'Identificador',
-    LLamarFuncion: 'LLamarFuncion'
+    LLamarFuncion: 'LLamarFuncion',
+    AccesoMatrix: 'AccesoMatrix'
 
 }
 const operacion = {
@@ -66,12 +67,45 @@ function Operaciones(var1, var2, var3, Type, Row, Column) {
 function getValor(exp, tabSym) {
     //console.log("ESTOY EN GET VALOR");
     if (exp.Tipo === operacion.TipoBin) {
-        const var1 = getValor(exp.var1, tabSym);
-        const var1tipo = getTipo(exp.var1, tabSym);
-        const var2 = getValor(exp.var2, tabSym);
-        const var2tipo = getTipo(exp.var2, tabSym);//obtenido el valor y tipo de los operandos
-        const var3 = getValor(exp.var3, tabSym);
-        const var3tipo = getTipo(exp.var3, tabSym);
+        let var1t;
+        let var1tipot;
+        if (exp.var1.Type === primitivos.LLamarFuncion) {
+            temp = getValor(exp.var1, tabSym);
+            var1t = temp.valor;
+            var1tipot = temp.tipo;
+        }
+        else {
+            var1t = getValor(exp.var1, tabSym);
+            var1tipot = getTipo(exp.var1, tabSym);
+        }
+        let var2t;
+        let var2tipot;
+        if (exp.var2.Type === primitivos.LLamarFuncion) {
+            temp = getValor(exp.var2, tabSym);
+            var2t = temp.valor;
+            var2tipot = temp.tipo;
+        }
+        else {
+            var2t = getValor(exp.var2, tabSym);
+            var2tipot = getTipo(exp.var2, tabSym);
+        }
+        let var3t;
+        let var3tipot;
+        if (exp.var3.Type === primitivos.LLamarFuncion) {
+            temp = getValor(exp.var3, tabSym);
+            var3t = temp.valor;
+            var3tipot = temp.tipo;
+        }
+        else {
+            var3t = getValor(exp.var3, tabSym);
+            var3tipot = getTipo(exp.var3, tabSym);
+        }
+        const var1 = var1t;
+        const var1tipo = var1tipot;
+        const var2 = var2t;
+        const var2tipo = var2tipot;//obtenido el valor y tipo de los operandos
+        const var3 = var3t;
+        const var3tipo = var3tipot;
         if (exp.Type === operacion.Ternario) {
             console.log("ESTOY EN EL TERNARIO");
         }
@@ -1745,11 +1779,51 @@ function getValor(exp, tabSym) {
 
 
     }
+    else if (exp.Type === primitivos.AccesoMatrix) {
+        elarreglo = tabSym.getArreglo(exp.Value.id);
+        console.log("ESTOY ACCEDIENDO A UN VALOR DEL VECTOR");
+        if (exp.Value.dimensionval.Value === ".") {//ES LENGTH
+            console.log("SE BUSCA EL LARGO DEL ARRAY");
+        }
+        else {
+            console.log("es una posicion del array");
+            let valor;
+            let tipo;
+            if (exp.Type === primitivos.LLamarFuncion) {
+                temp = getValor(exp.Value.dimensionval, tabSym);
+                valor = temp.valor;
+                tipo = temp.tipo;
+            }
+            else {
+                valor = getValor(exp.Value.dimensionval, tabSym);
+                tipo = getTipo(exp.Value.dimensionval, tabSym);
+            }
+            if (elarreglo.valsdim.length > valor) {
+                console.log("la posicion existe en el arreglo, procedo a buscar el valor");
+                elegido = elarreglo.valsdim[valor];
+                console.log("AVEEER");
+                let valore;
+                let tipoe;
+                if (elegido.Type === primitivos.LLamarFuncion) {
+                    temp = getValor(elegido, tabSym);
+                    valore = temp.valor;
+                    tipoe = temp.tipo;
+                }
+                else {
+                    valore = getValor(elegido, tabSym);
+                    tipoe = getTipo(elegido, tabSym);
+                }
+                xd = valore;
+                return valore;
+            }
+        }
+    }
 
 
     else if (exp.Type === primitivos.LLamarFuncion) {
         console.log("ENCONTRE UN OPERADOR DE TIPO FUNCION");
-        ahora = getValorFuncion(exp.Value, tabSym);
+        temp = CompilarFun(exp.Value, tabSym);
+        ahora = { valor: temp.valor, tipo: temp.tipo };
         return ahora;
     }
 
@@ -1763,29 +1837,29 @@ function getValor(exp, tabSym) {
         return exp.Value;
     }
     else if (exp.Type === primitivos.Identificador) {
-        
-            //la tabla tiene un padre
-            temporal = tabSym;
-            while (temporal != null) {
-                simbolingo = temporal.getSimbolo(exp.Value);
-                if (simbolingo === "ERROR") {
-                    temporal = temporal.Anterior;
-                }
-                else {
 
-                    return simbolingo.value;
-                }
+        //la tabla tiene un padre
+        temporal = tabSym;
+        while (temporal != null) {
+            simbolingo = temporal.getSimbolo(exp.Value);
+            if (simbolingo === "ERROR") {
+                temporal = temporal.Anterior;
+            }
+            else {
 
+                return simbolingo.value;
             }
-            /*temporalprueba = temporal;
-            simbolillo = temporal.getSimbolo(exp.Value);
-            if(simbolillo) {
-                return simbolillo.value;
-            }
-            else{
-                console.log("VARIABLE TODAVIA NO DECLARADA EN LOS ENTORNOS ACTUALES");
-            }*/
-        
+
+        }
+        /*temporalprueba = temporal;
+        simbolillo = temporal.getSimbolo(exp.Value);
+        if(simbolillo) {
+            return simbolillo.value;
+        }
+        else{
+            console.log("VARIABLE TODAVIA NO DECLARADA EN LOS ENTORNOS ACTUALES");
+        }*/
+
 
     }
 
@@ -2596,6 +2670,45 @@ function getTipo(exp, tabSym) {
 
 
 
+    }
+    else if (exp.Type === primitivos.AccesoMatrix) {
+        elarreglo = tabSym.getArreglo(exp.Value.id);
+        console.log("ESTOY ACCEDIENDO A UN VALOR DEL VECTOR");
+        if (exp.Value.dimensionval.Value === ".") {//ES LENGTH
+            console.log("SE BUSCA EL LARGO DEL ARRAY");
+        }
+        else {
+            console.log("es una posicion del array");
+            let valor;
+            let tipo;
+            if (exp.Type === primitivos.LLamarFuncion) {
+                temp = getValor(exp.Value.dimensionval, tabSym);
+                valor = temp.valor;
+                tipo = temp.tipo;
+            }
+            else {
+                valor = getValor(exp.Value.dimensionval, tabSym);
+                tipo = getTipo(exp.Value.dimensionval, tabSym);
+            }
+            if (elarreglo.valsdim.length > valor) {
+                console.log("la posicion existe en el arreglo, procedo a buscar el valor");
+                elegido = elarreglo.valsdim[valor];
+                console.log("AVEEER");
+                let valore;
+                let tipoe;
+                if (elegido.Type === primitivos.LLamarFuncion) {
+                    temp = getValor(elegido, tabSym);
+                    valore = temp.valor;
+                    tipoe = temp.tipo;
+                }
+                else {
+                    valore = getValor(elegido, tabSym);
+                    tipoe = getTipo(elegido, tabSym);
+                }
+                xd = tipoe;
+                return tipoe;
+            }
+        }
     }
     else if (exp.Type === primitivos.LLamarFuncion) {
         //console.log("ENCONTRE UN OPERADOR DE TIPO FUNCION");

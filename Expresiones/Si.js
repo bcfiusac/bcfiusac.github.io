@@ -12,13 +12,27 @@ function SiD(Instruccion, tabSym) {
     let res = null;
     prueba = Instruccion;
     console.log("LLEGUE ACA JEJEJEJE");
-    booleano = getValor(Instruccion.expr, nueva);
-    if (booleano) {
-        console.log("es cierto");
+    
+            let valor;
+            let tipo;
+            if (Instruccion.expr.Type === primitivos.LLamarFuncion) {
+                temp = getValor(Instruccion.expr,nueva);
+                valor = temp.valor;
+                tipo = temp.tipo;
+            }
+            else {
+                valor = getValor(Instruccion.expr, nueva);
+                tipo = getTipo(Instruccion.expr, nueva);
+            }
+
+            booleano = valor;
+
+    if (booleano && tipo===primitivos.Booleano) {
+        //console.log("es cierto");
         res = arbolR(Instruccion.bloque, nueva);
     }
     else {
-        console.log("es mentira");
+        //console.log("es mentira");
         if (Instruccion.demas) {
             if (Instruccion.demas[0].Type === "Si") {
                 res = SiD(Instruccion.demas, nueva);

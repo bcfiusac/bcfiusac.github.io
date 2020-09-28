@@ -8,8 +8,19 @@ function Asignacion(id, signo, valor) {
 }
 
 function AsignacionD(Instruccion, tabSym) {
-    const findValor = getValor(Instruccion.valor, tabSym);
-    const findTipo = getTipo(Instruccion.valor, tabSym);
+    let valor;
+    let tipo;
+    if (Instruccion.valor.Type === primitivos.LLamarFuncion) {
+        temp = getValor(Instruccion.valor, tabSym);
+        valor = temp.valor;
+        tipo = temp.tipo;
+    }
+    else {
+        valor = getValor(Instruccion.valor, tabSym);
+        tipo = getTipo(Instruccion.valor, tabSym);
+    }
+    const findValor = valor;
+    const findTipo = tipo;
     if (tabSym.Anterior) { //NO ES UNA TABLA DE SIMBOLOS GLOBAL
 
         const tabSymfija = tabSym;//por si me cambio a otra tabla de simbolos
@@ -34,8 +45,21 @@ function AsignacionD(Instruccion, tabSym) {
                 if (Instruccion.signo === "=") {//ES UNA SIMPLE ASIGNACIÓN
                     if (Instruccion.valor.Type === "Ternario") {
                         console.log("VIENE UN TERNARIO EN UN ENTORNO NO GLOBAL ALV");
-                        condicion = getValor(Instruccion.valor.var1, tabSym);
-                        tipoCon = getTipo(Instruccion.valor.var1, tabSym);
+                        let valor;
+                        let tipo;
+                        if (Instruccion.valor.var1.Type === primitivos.LLamarFuncion) {
+                            temp = getValor(Instruccion.valor.var1, tabSym);
+                            valor = temp.valor;
+                            tipo = temp.tipo;
+                        }
+                        else {
+                            valor = getValor(Instruccion.valor.var1, tabSym);
+                            tipo = getTipo(Instruccion.valor.var1, tabSym);
+                        }
+
+
+                        condicion = valor;
+                        tipoCon = tipo;
                         findVar = 23;
                         tabSym = tabSymfija;
                         if (tabSym.Anterior) {//NO ES LA TABLA PADRE
@@ -55,8 +79,18 @@ function AsignacionD(Instruccion, tabSym) {
                         if (findVar != "ERROR") {
                             if (tipoCon = "Booleano") {
                                 if (condicion) {
-                                    valorV = getValor(Instruccion.valor.var2, tabSym);
-                                    tipoV = getTipo(Instruccion.valor.var2, tabSym);
+
+                                    let valorV;
+                                    let tipoV;
+                                    if (Instruccion.valor.var2.Type === primitivos.LLamarFuncion) {
+                                        temp = getValor(exp.var2, tabSym);
+                                        valorV = temp.valor;
+                                        tipoV = temp.tipo;
+                                    }
+                                    else {
+                                        valorV = getValor(Instruccion.valor.var2, tabSym);
+                                        tipoV = getTipo(Instruccion.valor.var2, tabSym);
+                                    }
                                     if ((findVar.tipo === "Numero" && tipoV === "Numero") || (findVar.tipo === "Cadena" && tipoV === "Cadena") || (findVar.tipo === "Booleano" && tipoV === "Booleano")) {
                                         findVar.value = valorV;
                                         tabSym.ActSimbolo(findVar.id, findVar);
@@ -66,23 +100,32 @@ function AsignacionD(Instruccion, tabSym) {
                                     }
                                 }
                                 else {
-                                    valorF = getValor(Instruccion.valor.var3, tabSym);
-                                    tipoF = getTipo(Instruccion.valor.var3, tabSym);
+                                    let valorF;
+                                    let tipoF;
+                                    if (Instruccion.valor.var3.Type === primitivos.LLamarFuncion) {
+                                        temp = getValor(Instruccion.valor.var3, tabSym);
+                                        valorF = temp.valor;
+                                        tipoF = temp.tipo;
+                                    }
+                                    else {
+                                        valorF = getValor(Instruccion.valor.var3, tabSym);
+                                        tipoF = getTipo(Instruccion.valor.var3, tabSym);
+                                    }
                                     if ((findVar.tipo === "Numero" && tipoF === "Numero") || (findVar.tipo === "Cadena" && tipoF === "Cadena") || (findVar.tipo === "Booleano" && tipoF === "Booleano")) {
                                         findVar.value = valorF;
                                         bandera = false;
-                                        while(tabSym!=null){
-                                            bandera = tabSym.ActSimbolo(findVar.id,findVar);
-                                            if(bandera){
+                                        while (tabSym != null) {
+                                            bandera = tabSym.ActSimbolo(findVar.id, findVar);
+                                            if (bandera) {
                                                 break;
                                             }
-                                            else{
-                                                if(tabSym.Anterior!=null){
+                                            else {
+                                                if (tabSym.Anterior != null) {
                                                     tabSym = tabSym.Anterior;
                                                 }
                                             }
                                         }
-                                        if(!bandera){
+                                        if (!bandera) {
                                             console.log("NO SE PUDO LOCALIZAR Y ACTUALIZAR LA VARIABLE");
                                         }
                                         //tabSym.ActSimbolo(findVar.id, findVar);
@@ -146,10 +189,31 @@ function AsignacionD(Instruccion, tabSym) {
                     console.log("SOLO TENGO QUE ASIGNAR");
                     if (Instruccion.valor.Type === "Ternario") {
                         console.log("viene un if ternario");
-                        condicion = getValor(Instruccion.valor.var1, tabSym);
+                        let valor;
+                        let tipo;
+                        if (Instruccion.valor.var1.Type === primitivos.LLamarFuncion) {
+                            temp = getValor(Instruccion.valor.var1, tabSym);
+                            valor = temp.valor;
+                            tipo = temp.tipo;
+                        }
+                        else {
+                            valor = getValor(Instruccion.valor.var1, tabSym);
+                            tipo = getTipo(Instruccion.valor.var1, tabSym);
+                        }
+                        condicion = valor;
                         if (condicion) {
-                            valorV = getValor(Instruccion.valor.var2, tabSym);
-                            tipoV = getTipo(Instruccion.valor.var2, tabSym);
+                            let valorV;
+                            let tipoV;
+                            if (Instruccion.valor.var2.Type === primitivos.LLamarFuncion) {
+                                temp = getValor(exp.var2, tabSym);
+                                valorV = temp.valor;
+                                tipoV = temp.tipo;
+                            }
+                            else {
+                                valorV = getValor(Instruccion.valor.var2, tabSym);
+                                tipoV = getTipo(Instruccion.valor.var2, tabSym);
+                            }
+
                             if ((findVar.tipo === "Numero" && tipoV === "Numero") || (findVar.tipo === "Cadena" && tipoV === "Cadena") || (findVar.tipo === "Booleano" && tipoV === "Booleano")) {
                                 findVar.value = valorV;
                                 tabSym.ActSimbolo(findVar.id, findVar);
@@ -160,8 +224,17 @@ function AsignacionD(Instruccion, tabSym) {
 
                         }
                         else {
-                            valorF = getValor(Instruccion.valor.var3, tabSym);
-                            tipoF = getTipo(Instruccion.valor.var3, tabSym);
+                            let valorF;
+                            let tipoF;
+                            if (Instruccion.valor.var3.Type === primitivos.LLamarFuncion) {
+                                temp = getValor(Instruccion.valor.var3, tabSym);
+                                valorF = temp.valor;
+                                tipoF = temp.tipo;
+                            }
+                            else {
+                                valorF = getValor(Instruccion.valor.var3, tabSym);
+                                tipoF = getTipo(Instruccion.valor.var3, tabSym);
+                            }
                             if ((findVar.tipo === "Numero" && tipoF === "Numero") || (findVar.tipo === "Cadena" && tipoF === "Cadena") || (findVar.tipo === "Booleano" && tipoF === "Booleano")) {
                                 findVar.value = valorF;
                                 tabSym.ActSimbolo(findVar.id, findVar);
@@ -231,10 +304,30 @@ function AsignacionD(Instruccion, tabSym) {
                     if (Instruccion.valor.Type === "Ternario") {
                         //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
                         console.log("viene un if ternario");
-                        condicion = getValor(Instruccion.valor.var1, tabSym);
+                        let valor;
+                        let tipo;
+                        if (Instruccion.valor.var1.Type === primitivos.LLamarFuncion) {
+                            temp = getValor(Instruccion.valor.var1, tabSym);
+                            valor = temp.valor;
+                            tipo = temp.tipo;
+                        }
+                        else {
+                            valor = getValor(Instruccion.valor.var1, tabSym);
+                            tipo = getTipo(Instruccion.valor.var1, tabSym);
+                        }
+                        condicion = valor;
                         if (condicion) {
-                            valorV = getValor(Instruccion.valor.var2, tabSym);
-                            tipoV = getTipo(Instruccion.valor.var2, tabSym);
+                            let valorV;
+                            let tipoV;
+                            if (Instruccion.valor.var2.Type === primitivos.LLamarFuncion) {
+                                temp = getValor(exp.var2, tabSym);
+                                valorV = temp.valor;
+                                tipoV = temp.tipo;
+                            }
+                            else {
+                                valorV = getValor(Instruccion.valor.var2, tabSym);
+                                tipoV = getTipo(Instruccion.valor.var2, tabSym);
+                            }
                             if ((findVar.tipo === "Numero" && tipoV === "Numero") || (findVar.tipo === "Cadena" && tipoV === "Cadena") || (findVar.tipo === "Booleano" && tipoV === "Booleano")) {
                                 findVar.value = findVar.value + valorV;
                                 tabSym.ActSimbolo(findVar.id, findVar);
@@ -245,8 +338,17 @@ function AsignacionD(Instruccion, tabSym) {
 
                         }
                         else {
-                            valorF = getValor(Instruccion.valor.var3, tabSym);
-                            tipoF = getTipo(Instruccion.valor.var3, tabSym);
+                            let valorF;
+                            let tipoF;
+                            if (Instruccion.valor.var3.Type === primitivos.LLamarFuncion) {
+                                temp = getValor(Instruccion.valor.var3, tabSym);
+                                valorF = temp.valor;
+                                tipoF = temp.tipo;
+                            }
+                            else {
+                                valorF = getValor(Instruccion.valor.var3, tabSym);
+                                tipoF = getTipo(Instruccion.valor.var3, tabSym);
+                            }
                             if ((findVar.tipo === "Numero" && tipoF === "Numero") || (findVar.tipo === "Cadena" && tipoF === "Cadena") || (findVar.tipo === "Booleano" && tipoF === "Booleano")) {
                                 findVar.value = findVar.value + valorF;
                                 tabSym.ActSimbolo(findVar.id, findVar);

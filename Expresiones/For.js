@@ -11,8 +11,18 @@ function For(asignacion,condicion,incdec,sentencias){
 function ForD(Instruccion,tabSym){
 console.log("ESTOY EN EL FOR");
 arbolRSingle(Instruccion.asignacion,tabSym);//declaro y asigno la variable
-Condicion = getValor(Instruccion.condicion,tabSym);//obtengo la condicion
-tipoCondicion = getTipo(Instruccion.condicion,tabSym);//obtengo el tipo de la condicion
+let Condicion ;//obtengo la condicion
+let tipoCondicion ;
+if (Instruccion.condicion.Type === primitivos.LLamarFuncion) {
+    temp = getValor(Instruccion.condicion, tabSym);
+    condicion = temp.valor;
+    tipoCondicion = temp.tipo;
+}
+else {
+    Condicion = getValor(Instruccion.condicion, tabSym);
+    tipoCondicion = getTipo(Instruccion.condicion, tabSym);
+}
+//obtengo el tipo de la condicion
 if(Condicion && tipoCondicion==="Booleano"){
 do{
     //arbolR(Instruccion.sentencias,tabSym);
@@ -32,7 +42,16 @@ do{
                 }
             }
             arbolR([Instruccion.incdec],tabSym);
+            if (Instruccion.condicion.Type === primitivos.LLamarFuncion) {
+                temp = getValor(Instruccion.condicion, tabSym);
+                condicion = temp.valor;
+                tipoCondicion = temp.tipo;
+            }
+            else {
+                Condicion = getValor(Instruccion.condicion, tabSym);
+                tipoCondicion = getTipo(Instruccion.condicion, tabSym);
+            }
 }
-while(getValor(Instruccion.condicion,tabSym));
+while(Condicion);
 }
 }

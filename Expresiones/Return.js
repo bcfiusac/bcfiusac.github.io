@@ -10,7 +10,7 @@ function Return(variable) {
 function ReturnD(Instruccion, tabSym) {
     console.log("VIENE UN RETURN");
     //tabSym.setearReturn(Instruccion.variable,tabSym);
-    if (Instruccion.variable != null) {
+    if (Instruccion.variable != null ) {
         Instruccion.valor = getValor(Instruccion.variable, tabSym);
         Instruccion.tipo = getTipo(Instruccion.variable, tabSym);
     }

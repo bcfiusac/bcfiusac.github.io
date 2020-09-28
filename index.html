@@ -25,8 +25,13 @@
     <script src="./Expresiones/objetoRetorno.js"></script>
     <script src="./Expresiones/Breik.js"></script>
     <script src="./Expresiones/Continuar.js"></script>
+    <script src="./Expresiones/DecArreglo.js"></script>
+    <script src="./Expresiones/AccesoMatrix.js"></script>
+    <script src="./Expresiones/Graficar.js"></script>
+    <script src="./Expresiones/Error.js"></script>
     <script src="parser.js"></script>
-    
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+
 </head>
 
 <body>
@@ -34,7 +39,10 @@
         var contadorLinea = 0;
         var contadorColumna = 1;
         var pila = [];
-       
+        var Horrores = [];
+
+
+
     </script>
     <div id="container">
         <div class="form-group green-border-focus">
@@ -47,84 +55,154 @@
         <button type="button" class="btn btn-primary btn-lg btn-block" onclick="analizando()">Analizar</button>
         <button type="button" class="btn btn-primary btn-lg btn-block" onclick="cursor()">Cursor</button>
 
-        <script>
-            function analizando() {
-                var x = document.getElementById("texto").value;
-                Compilar(x);
-                //var parser = require('./gramatica');
-                
-                
-                //var parse = gramatica.parse(x);
-                //alert(parse);
-                //document.getElementById("demo").innerHTML = x;
-                //console.log(x.toString());
-                //alert(x.toString());
-            }
-            function cursor() {
-                var textarea = document.getElementById("texto");
-                var spammm = document.getElementById("spam");
-                textarea.focus();
-                //alert(textarea.selectionStart);
-                var posicionh = textarea.selectionStart;
-                document.getElementById("spam").innerHTML = textarea.selectionStart;
-
-
-            }
-            function processe(e) {
-                var code = (e.keyCode ? e.keyCode : e.which);
-                if (code == 8) {
-                    if (contadorLinea == 0 && contadorColumna > 0) {
-                        if(pila.length>0){//si la pila tiene valores
-                            //alert("LA PILA TODAVIA TIENE MAS DE 1 VALOR, TIENE--> " + pila.length);
-                            
-                            
-                            contadorLinea = pila[pila.length-1];
-                            document.getElementById("spam").innerHTML = contadorLinea;
-                            pila.pop();
-                        }
-                        else{
-                            //alert("LA PILA NO TIENE MAS DE 1 VALOR");
-
-                        }
-                        contadorColumna = contadorColumna - 1;
-                        document.getElementById("columna").innerHTML = contadorColumna;
-
-                    }
-                    else if (contadorLinea > 0) {
-                        contadorLinea = contadorLinea - 1;
-                        document.getElementById("spam").innerHTML = contadorLinea;
-                    }
-                }
-            }
-
-            function process(e) {
-                var code = (e.keyCode ? e.keyCode : e.which);
-                if (code == 13) { //Enter keycode
-                    pila.push(contadorLinea);
-                    //alert("Guardando en la pila el valor --> " + contadorLinea);
-                    contadorLinea = 0;
-                    document.getElementById("spam").innerHTML = contadorLinea;
-                    contadorColumna = contadorColumna + 1;
-                    document.getElementById("columna").innerHTML = contadorColumna;
-
-                }
-                else {
-                    contadorLinea = contadorLinea + 1;
-                    document.getElementById("spam").innerHTML = contadorLinea;
-                    
-
-                }
-            }
-
-        </script>
-
     </div>
     <div class="jumbotron text-center" id="bootstrapStyle">
         <h1>Primer Proyecto Compi2</h1>
         <p>Byron David Cermeño Juárez - 201313734</p>
+        <textarea class="form-control" id="consola" rows="10"></textarea>
 
 
     </div>
+    <div>
+        <h1>CONSOLA</h1>
+
+    </div>
+    <script>
+        function tableCreate(fila, columna) {
+            var body = document.body,
+                tbl = document.createElement('table');
+            tbl.style.width = '100px';
+            tbl.style.border = '1px solid black';
+
+            for (var i = 0; i < fila; i++) {
+                var tr = tbl.insertRow();
+                for (var j = 0; j < columna; j++) {
+
+                    var td = tr.insertCell();
+                    td.appendChild(document.createTextNode('Cell'));
+                    td.style.border = '1px solid black';
+
+
+                }
+            }
+            body.appendChild(tbl);
+        }
+
+        function analizando() {
+            //let HorroresSintacticos = new Array();
+            let HorroresLexico = new Array();
+            window.consola = new Array();//mensajes en mi consola
+            window.tablas = new Array();//tablas a imprimir 
+            var x = document.getElementById("texto").value;
+            Compilar(x);
+            probador = window.tablas;
+            var y = "";
+            document.getElementById("consola").value = "";
+            for (let i = 0; i < consola.length; i++) {
+                y += consola[i];
+                y += "\n";
+            }
+            document.getElementById("consola").value = y;
+            if (tablas.length > 0) {
+                var body = document.body,
+                tbl = document.createElement('table');
+                tbl.style.width = '300px';
+                //tbl.style.border = '1px solid black';
+                tbl.style.text ='center';
+                var tr = tbl.insertRow();
+                    var td = tr.insertCell();
+                    td.appendChild(document.createTextNode("ID"));
+                    var tdx = tr.insertCell();
+                    tdx.appendChild(document.createTextNode("VALOR"));
+                for (let i = 0; i < tablas.length; i++) {//total de tablas a imprimir
+                    var tr = tbl.insertRow();
+                    //var td = tr.insertCell();
+                    //td.appendChild(document.createTextNode("ID"));
+                    //var tdx = tr.insertCell();
+                    //tdx.appendChild(document.createTextNode("VALOR"));
+                    for(let j =0;j<tablas[i].Symbol.length;j++){
+                        var td = tr.insertCell();
+                        td.appendChild(document.createTextNode(tablas[i].Symbol[j].id));
+                        var td = tr.insertCell();
+                        td.appendChild(document.createTextNode(tablas[i].Symbol[j].value));
+
+
+                    }
+                
+                }
+                body.appendChild(tbl);
+
+            }
+
+
+            //var parser = require('./gramatica');
+
+
+            //var parse = gramatica.parse(x);
+            //alert(parse);
+            //document.getElementById("demo").innerHTML = x;
+            //console.log(x.toString());
+            //alert(x.toString());
+        }
+        function cursor() {
+            var textarea = document.getElementById("texto");
+            var spammm = document.getElementById("spam");
+            textarea.focus();
+            //alert(textarea.selectionStart);
+            var posicionh = textarea.selectionStart;
+            document.getElementById("spam").innerHTML = textarea.selectionStart;
+
+
+        }
+        function processe(e) {
+            var code = (e.keyCode ? e.keyCode : e.which);
+            if (code == 8) {
+                if (contadorLinea == 0 && contadorColumna > 0) {
+                    if (pila.length > 0) {//si la pila tiene valores
+                        //alert("LA PILA TODAVIA TIENE MAS DE 1 VALOR, TIENE--> " + pila.length);
+
+
+                        contadorLinea = pila[pila.length - 1];
+                        document.getElementById("spam").innerHTML = contadorLinea;
+                        pila.pop();
+                    }
+                    else {
+                        //alert("LA PILA NO TIENE MAS DE 1 VALOR");
+
+                    }
+                    contadorColumna = contadorColumna - 1;
+                    document.getElementById("columna").innerHTML = contadorColumna;
+
+                }
+                else if (contadorLinea > 0) {
+                    contadorLinea = contadorLinea - 1;
+                    document.getElementById("spam").innerHTML = contadorLinea;
+                }
+            }
+        }
+
+        function process(e) {
+            var code = (e.keyCode ? e.keyCode : e.which);
+            if (code == 13) { //Enter keycode
+                pila.push(contadorLinea);
+                //alert("Guardando en la pila el valor --> " + contadorLinea);
+                contadorLinea = 0;
+                document.getElementById("spam").innerHTML = contadorLinea;
+                contadorColumna = contadorColumna + 1;
+                document.getElementById("columna").innerHTML = contadorColumna;
+
+            }
+            else {
+                contadorLinea = contadorLinea + 1;
+                document.getElementById("spam").innerHTML = contadorLinea;
+
+
+            }
+        }
+
+    </script>
+
+
 </body>
 
 </html>

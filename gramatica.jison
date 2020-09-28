@@ -97,7 +97,9 @@
 
 <<EOF>>                 return 'EOF';
 
-.                       { console.error('Este es un error léxico: ' + yytext + ', en la linea: ' + yylloc.first_line + ', en la columna: ' + yylloc.first_column); }
+.                       {
+	const error = Error ('Lexico', yytext ,yylloc.first_line,yylloc.first_column);
+	Horrores.push(error);  }
 /lex
 
 /* Asociación de operadores y precedencia */
@@ -119,28 +121,31 @@
 %% /* Definición de la gramática */
 inicio: sentencias EOF {return $1;};
 //inicio: expresion EOF {console.log("EL VALOR ES ---> " + getValor($1));};
-sentencias: sentencias sentencia {$1.push($2);$$ = $1;}| sentencia {$$ = [$1];}| error {console.error('Este es un error sintáctico: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column);};
+sentencias: sentencia sentencias {$$ = $2;$$.unshift($1);}| sentencia {$$ = [$1];} ;
 //-------------ASIGNACION - DECLARACIÓN DE VARIABLES SIMPLES
 TipoVar : Let {$$ = true;}| Const {$$ = false;};
-TiposVars: Number | Boolean | String | IDENTIFICADOR | Void;
+TiposVars: Number | Boolean | String | IDENTIFICADOR | Void ;
 sentencia: decAsign PTCOMA {$$ = $1;} | Asignacion {$$ = $1;} | Print{$$ = $1;} | Funcion {$$=$1;} | Retorno {$$=$1;} | IFS {$$=$1;} | SUICH {$$=$1;} | Breik {$$=$1;} | LLamadaEjec PTCOMA {$$=$1;} | Continuar {$$=$1;}
-		| IncDec PTCOMA {$$=$1;} | Wail {$$=$1;} |DuWail{$$=$1;} | ForNormal {$$=$1;} |ForOfIn| Grafica | MatrixSen | Tipos;
-Grafica: Graficar PARIZQ PARDER PTCOMA;
+		| IncDec PTCOMA {$$=$1;} | Wail {$$=$1;} |DuWail{$$=$1;} | ForNormal {$$=$1;} | Grafica {$$=$1;} |error {
+	const error = Error ('Sintactico',yytext ,this._$.first_line,this._$.first_column);
+	Horrores.push(error);};
+Grafica: Graficar PARIZQ PARDER PTCOMA {$$=Graficar();};
 																		//TIPOVAR - ID - TIPO - EXPRESION
 decAsign: TipoVar IDENTIFICADOR DosPuntos Number Igual expresion   {$$ = Declaracion($1, $2, $4, $6);}
 			|TipoVar IDENTIFICADOR DosPuntos Boolean Igual expresion  {$$ = Declaracion($1, $2, $4, $6);}
 			|TipoVar IDENTIFICADOR DosPuntos String Igual expresion  {$$=Declaracion($1, $2, $4, $6);}
 			|TipoVar IDENTIFICADOR Igual expresion  {$$=Declaracion($1,$2,0,$4);}
-			|TipoVar IDENTIFICADOR DosPuntos TiposVars Dimensiones Igual Dimension PTCOMA;
+			|TipoVar IDENTIFICADOR DosPuntos TiposVars Dimension Igual CORIZQ ValsArray CORDER {$$=DecArreglo($1,$2,$4,$8)} ; 
 
 //Expresiones: tipoBool | expresion | CADENA;
 //tipoBool: Trues | Falses;
 //BoolValues: tipoBool | expresion;
 //StringValues: CADENA | expresion;
+ValsArray: ValsArray Coma expresion {$1.push($3);$$=$1;} | expresion {$$=[$1];}| {$$=[];};
 TipoDef:Number | Boolean | String;
 ParamTipo: IDENTIFICADOR DosPuntos expresion | IDENTIFICADOR DosPuntos TipoDef;
 ParamsTipo: ParamsTipo Coma ParamTipo | ParamTipo;
-Tipos: Type IDENTIFICADOR Igual LlaveI ParamsTipo LLaveD PTCOMA;
+//Tipos: Type IDENTIFICADOR Igual LlaveI ParamsTipo LLaveD PTCOMA;
 IncDec: IDENTIFICADOR signIncDec {$$ = IncDec($1,$2);};
 signIncDec: Incremento | Decremento;
 Asignacion: IDENTIFICADOR IgualMasIgual expresion PTCOMA {$$=Asignacion($1,$2,$3);};
@@ -149,7 +154,9 @@ Print : Console Punto Log PARIZQ expresion PARDER PTCOMA {$$ = Imprimir($5);};
 //Anidados: Anidados MAS Anidado {$1.push($3);$$ = $1;} | Anidado sentencia {$$ = [$1];};
 //Anidado: ENTERO | DECIMAL | CADENA | IDENTIFICADOR | LLamadaEjec;
 Funcion: Function IDENTIFICADOR PARIZQ ParamsEntrada PARDER DosPuntos TiposVars LlaveI sentencias LLaveD
-		{$$=Funcion($2,$4,$7,$9);};//agregar tipo de funcion
+		{$$=Funcion($2,$4,$7,$9);}
+		|Function IDENTIFICADOR PARIZQ ParamsEntrada PARDER LlaveI sentencias LLaveD
+		{$$=Funcion($2,$4,0,$7);};//agregar tipo de funcion
 Retorno: Return ContReturn PTCOMA {$$=Return($2);};
 ContReturn: expresion {$$=$1;}| ;
 Continuar: Continue PTCOMA {$$=Continuar();};
@@ -159,8 +166,8 @@ Dimensiones: Dimensiones Dimension | Dimension;
 Dimension: CORIZQ CORDER;
 FuncionExp: IDENTIFICADOR PARIZQ Parametros PARDER;
 Parametros: Parametros Coma expresion | expresion;
-ParamsEntrada: ParamsEntrada Coma ParamEntrada {$1.push($3);$$=$1;} | ParamEntrada {$$=[$1];}|;
-ParamEntrada: IDENTIFICADOR DosPuntos TiposVars {$$=ParamE($1,$3);}| IDENTIFICADOR DosPuntos TiposVars Dimensiones ;//arreglar orden de estos parametro
+ParamsEntrada: ParamEntrada Coma ParamsEntrada {$$=$3;$$.unshift($1);} | ParamEntrada {$$=[$1];}| {$$=[];};
+ParamEntrada: IDENTIFICADOR DosPuntos TiposVars {$$=ParamE($1,$3);} ;//arreglar orden de estos parametro
 BloqueSentencias: LlaveI sentencias LLaveD {$$=$2;}|LlaveI LLaveD {$$=0;};
 
 //-----------SENTENCIA IF--------------------------------
@@ -174,7 +181,7 @@ SUICH: Switch PARIZQ expresion PARDER LlaveI Casos LLaveD {$$=Switch($3,$6);};
 //CasosDef: Casos Defaultt {$1.push($2);$$=$1;}| Casos {$$=[$1];}| Defaultt {$$=[$1];}|;
 //Defaultt: Default DosPuntos LlaveI sentencias LLaveD {$$=Caso($4,0);};
 Casos: Casos Caso {$1.push($2);$$=$1;}| Caso {$$=[$1];};
-Caso: Case expresion DosPuntos LlaveI sentencias LLaveD {$$ = Caso($2,$5);console.log($$);}
+Caso: Case expresion DosPuntos LlaveI sentencias LLaveD {$$ = Caso($2,$5);}
 	| Default DosPuntos LlaveI sentencias LLaveD {$$=Caso(0,$4);};
 Breik: Break PTCOMA {$$=Breik();};
 //------------SENTENCIA WHILE
@@ -227,7 +234,7 @@ expresion
 	| DECIMAL                       { $$ = AritmeticaConst(primitivos.Numero,$1,this._$.first_line,this._$.first_column); }
 	| IDENTIFICADOR					{ $$ = AritmeticaConst(primitivos.Identificador,$1,this._$.first_line,this._$.first_column); }
 	| LLamadaEjec					{ $$ = AritmeticaConst(primitivos.LLamarFuncion,$1,this._$.first_line,this._$.first_column); }	
-	| AccesoMatrix
+	| AccesoMatrix					{ $$ = AritmeticaConst(primitivos.AccesoMatrix,$1,this._$.first_line,this._$.first_column);}
 	| AccesoAtributo
 	| CADENA						{ $$ = AritmeticaConst(primitivos.Cadena,$1,this._$.first_line,this._$.first_column); }
 	| Trues							{ $$ = AritmeticaConst(primitivos.Booleano,true,this._$.first_line,this._$.first_column); }
@@ -236,11 +243,11 @@ expresion
 	| expresion Ternario expresion DosPuntos expresion {$$= Operaciones($1,$3,$5, operacion.Ternario,this._$.first_line,this._$.first_column);}
 ;
 
-ListaExp: ListaExp Coma expresion {$1.push($3);$$=$1;} | expresion {$$=[$1];} | ;
+ListaExp: expresion Coma ListaExp {$$=$3;$$.unshift($1);} | expresion {$$=[$1];} | {$$=[];} ;
 LLamadaEjec: IDENTIFICADOR PARIZQ ListaExp PARDER {$$=LlamarF($1,$3);};
-AccesoMatrix: IDENTIFICADOR DimensionesVal | IDENTIFICADOR Punto Length | IDENTIFICADOR DimensionesVal Punto Length;
+AccesoMatrix: IDENTIFICADOR DimensionVal {$$=AccesoMatrix($1,$2);}| IDENTIFICADOR Punto Length {$$=AccesoMatrix($1,$2);};
 AccesoAtributo: IDENTIFICADOR Punto IDENTIFICADOR;
 DimensionesVal: DimensionesVal DimensionVal|DimensionVal;
-DimensionVal: CORIZQ expresion CORDER;
+DimensionVal: CORIZQ expresion CORDER {$$=$2;};
 MatrixSen: IDENTIFICADOR DimensionesVal Igual Dimensiones PTCOMA | IDENTIFICADOR DimensionesVal Igual expresion PTCOMA; 
 

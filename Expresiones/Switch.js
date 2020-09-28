@@ -9,8 +9,19 @@ function Switch(expresion, casos){
 
 function SwitchD(Instruccion, tabSym){
 console.log("ENCONTRE UN SWITCH :v");
-ValorBuscado = getValor(Instruccion.expresion,tabSym);
-tipoBuscado = getTipo(Instruccion.expresion,tabSym);
+let findValor;
+let findTipo;
+if (Instruccion.expresion.Type === primitivos.LLamarFuncion) {
+    temp = getValor(Instruccion.expresion, tabSym);
+    findValor = temp.valor;
+    findTipo = temp.tipo;
+}
+else {
+    findValor = getValor(Instruccion.expresion, tabSym);
+    findTipo = getTipo(Instruccion.expresion, tabSym);
+}
+ValorBuscado = findValor;
+tipoBuscado = findTipo;
 console.log("hola");
 contadorDefaults=0;
 bandera = 0;

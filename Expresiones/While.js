@@ -13,7 +13,17 @@ function WhileD(Instruccion,tabSym){
     console.log("HOLA JEJEJEJE");
     sentencias = Instruccion.sentencias;
     condicion = Instruccion.expresion;
-    validarCondicion = getValor(Instruccion.expresion,tabSym);
+    let validarCondicion;
+    let tipoCond;
+    if (Instruccion.expresion.Type === primitivos.LLamarFuncion) {
+        temp = getValor(Instruccion.expresion, tabSym);
+        validarCondicion = temp.valor;
+        tipoCond = temp.tipo;
+    }
+    else {
+        validarCondicion = getValor(Instruccion.expresion, tabSym);
+        tipoCond = getTipo(Instruccion.expresion, tabSym);
+    }
     if(validarCondicion){
         do{
             res = arbolR(Instruccion.sentencias,tabSym);
@@ -29,8 +39,19 @@ function WhileD(Instruccion,tabSym){
                 }
             }
             
+            //validarCondicion = getValor(Instruccion.expresion,tabSym);
+            if (Instruccion.expresion.Type === primitivos.LLamarFuncion) {
+                temp = getValor(Instruccion.expresion, tabSym);
+                validarCondicion = temp.valor;
+                tipoCond = temp.tipo;
+            }
+            else {
+                validarCondicion = getValor(Instruccion.expresion, tabSym);
+                tipoCond = getTipo(Instruccion.expresion, tabSym);
+            }
+
         }
-        while(getValor(Instruccion.expresion,tabSym))
+        while(validarCondicion)
     }
     else console.log("NO SE ENTRA AL CICLO, NO CUMPLE");
     
