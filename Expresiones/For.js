@@ -9,7 +9,7 @@ function For(asignacion,condicion,incdec,sentencias){
 }
 
 function ForD(Instruccion,tabSym){
-console.log("ESTOY EN EL FOR");
+//console.log("ESTOY EN EL FOR");
 arbolRSingle(Instruccion.asignacion,tabSym);//declaro y asigno la variable
 let Condicion ;//obtengo la condicion
 let tipoCondicion ;

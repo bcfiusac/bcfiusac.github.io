@@ -8,7 +8,7 @@ function DoWhile(sentencias, expresion) {
 
 function DoWhileD(Instruccion, tabSym) {
     probador = Instruccion;
-    console.log("HOLA JEJEJEJE");
+    //console.log("HOLA JEJEJEJE");
     sentencias = Instruccion.expresion;//aqui hay un error jejeje pero funca :v
     condicion = Instruccion.sentencias;//aqui tambien obviamente :'v
     let valorF;

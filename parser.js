@@ -18,13 +18,14 @@ const instruccionesC = {
     Continuar: 'Continuar',
     DecArreglo: 'DecArreglo',
     AccesoMatrix: 'AccesoMatrix',
-    Graficar: 'Graficar'
+    Graficar: 'Graficar',
+    Tipo:'Tipo'
 
 }
 function Compilar(entrada) {
 
     root = gramatica.parse(entrada.toString());
-    const primeriza = new SymTable([], [],[], null);
+    const primeriza = new SymTable([],[],[],[],[],null);
     window.tabTotal = new Array();
     window.consolita = new Array();
     window.tablas = window.tabTotal;
@@ -40,7 +41,7 @@ function Compilar(entrada) {
 
 
 }
-function primerR(instrucciones, tabSym) {
+function primerR(instrucciones, tabSym) {//PRIMERA PASADA, SOLO PARA LAS FUNCIONES
     const xd = [];
     for (let i = 0; i < instrucciones.length; i++) {
         const instruccion = instrucciones[i];
@@ -68,6 +69,9 @@ function primerR(instrucciones, tabSym) {
 
             }
 
+        }
+        else if (instruccion.Type === instruccionesC.Tipo){
+            TipoD(instruccion,tabSym);
         }
         
 
@@ -103,8 +107,12 @@ function arbolR(instrucciones, tabSym) {
             DeclaracionD(instruccion, tabSym);
 
         }
+        /*else if (instruccion.Type === instruccionesC.Tipo){
+            TipoD(instruccion,tabSym);
+        }*/
+
         else if (instruccion.Type === instruccionesC.LlamarF){
-            compilarFun(instruccion,tabSymTotal);
+            compilarFun(instruccion,tabSym);
         }
         else if (instruccion.Type === instruccionesC.DecArreglo) {
             //console.log("ESTOY EN aca");
@@ -121,10 +129,10 @@ function arbolR(instrucciones, tabSym) {
             window.consolita.push(ImprimirD(instruccion, tabSym));
         }
         else if(instruccion.Type=== instruccionesC.Graficar){
-            console.log("QUIERE GRAFICAAAAAAAAAR");
-            
-            window.tabTotal.push(tabSym);
-            console.log("prueba");
+            //console.log("QUIERE GRAFICAAAAAAAAAR");
+            copiando = Object.assign({},tabSym);
+            window.tabTotal.push(copiando);
+            //console.log("prueba");
         }
         else if (instruccion.Type === instruccionesC.Si) {
             //const nueva = new SymTable([],[],tabSym);
@@ -141,7 +149,7 @@ function arbolR(instrucciones, tabSym) {
 
         }
         else if (instruccion.Type === instruccionesC.While) {
-            const nueva = new SymTable([], [], tabSym);
+            const nueva = new SymTable([], [],[],[],[], tabSym);
             const conW = WhileD(instruccion, nueva);
             if(conW!=null && conW.Type===instruccionesC.Return){
                 return conW;
@@ -149,7 +157,7 @@ function arbolR(instrucciones, tabSym) {
             //tabSym = nueva.Anterior;
         }
         else if (instruccion.Type === instruccionesC.DoWhile) {
-            const nueva = new SymTable([], [], tabSym);
+            const nueva = new SymTable([], [],[],[],[], tabSym);
             const conDW = DoWhileD(instruccion, nueva);
             if(conDW!=null && conDW.Type===instruccionesC.Return){
                 return conDW;
@@ -157,12 +165,12 @@ function arbolR(instrucciones, tabSym) {
             //tabSym = nueva.Anterior;
         }
         else if (instruccion.Type === instruccionesC.Switch) {
-            const nueva = new SymTable([], [], tabSym);
+            const nueva = new SymTable([], [],[],[],[], tabSym);
             SwitchD(instruccion, nueva);
             tabSym = nueva.Anterior;
         }
         else if (instruccion.Type === instruccionesC.For) {
-            const nueva = new SymTable([], [], tabSym);
+            const nueva = new SymTable([], [],[],[],[], tabSym);
             const conFR = ForD(instruccion, nueva);
             if(conFR!=null && conFR.Type===instruccionesC.Return){
                 return conFR;
@@ -229,32 +237,32 @@ function arbolRSingle(instruccion, tabSym) {
         ImprimirD(instruccion, tabSym);
     }
     else if (instruccion.Type === instruccionesC.Si) {
-        const nueva = new SymTable([], [], tabSym);
+        const nueva = new SymTable([], [],[],[],[], tabSym);
         SiD(instruccion, nueva);
         tabSym = nueva.Anterior;
     }
     else if (instruccion.Type === instruccionesC.While) {
-        const nueva = new SymTable([], [], tabSym);
+        const nueva = new SymTable([], [],[],[],[], tabSym);
         WhileD(instruccion, nueva);
         tabSym = nueva.Anterior;
     }
     else if (instruccion.Type === instruccionesC.DoWhile) {
-        const nueva = new SymTable([], [], tabSym);
+        const nueva = new SymTable([], [],[],[],[], tabSym);
         DoWhileD(instruccion, nueva);
         tabSym = nueva.Anterior;
     }
     else if (instruccion.Type === instruccionesC.Switch) {
-        const nueva = new SymTable([], [], tabSym);
+        const nueva = new SymTable([], [],[],[],[], tabSym);
         SwitchD(instruccion, nueva);
         tabSym = nueva.Anterior;
     }
     else if (instruccion.Type === instruccionesC.For) {
-        const nueva = new SymTable([], [], tabSym);
+        const nueva = new SymTable([], [],[],[],[], tabSym);
         ForD(instruccion, nueva);
         tabSym = nueva.Anterior;
     }
     else if (instruccion.Type === instruccionesC.Funcion) {
-        const nueva = new SymTable([], [], tabSym);
+        const nueva = new SymTable([], [],[],[],[], tabSym);
         FuncionD(instruccion, nueva);
         tabSym = nueva.Anterior;
     }

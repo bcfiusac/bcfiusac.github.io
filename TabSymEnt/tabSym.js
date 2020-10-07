@@ -8,6 +8,7 @@ function Symbol(tipo, id, value, editar) {
     }
 }
 
+
 function SymFun(id, parametros, tipoF, sentencias) {
     return {
         id: id,
@@ -25,12 +26,22 @@ function SymArr(tipoVar, id, tipo, valsdim) {
         valsdim: valsdim
     }
 }
+function SymTipo(id,params,tipoVar,tipo){
+    return{
+        id:id,
+        params:params,
+        tipoVar:tipoVar,
+        tipo:tipo
+    }
+}
 
 class SymTable {
-    constructor(Symbol, Funcion, Arreglo, Anterior) {
+    constructor(Symbol, Funcion, Arreglo, Tipo, TipoDef, Anterior) {
         this.Symbol = Symbol;
         this.Funcion = Funcion;
         this.Arreglo = Arreglo;
+        this.Tipo = Tipo;
+        this.TipoDef = TipoDef;
         this.Anterior = Anterior;
 
     }
@@ -52,6 +63,14 @@ class SymTable {
         const newArreglo = SymArr(tipoVar, id, tipo, valsdim);
         this.Arreglo.push(newArreglo);
     }
+    setearTipo(id,params,tipoVarP,tipo){
+        const newTipo = SymTipo(id,params,tipoVarP,tipo);
+        this.Tipo.push(newTipo);
+    }
+    setearTipoDef(id,params,tipoVarP,tipo){
+        const newTipo = SymTipo(id,params,tipoVarP,tipo);
+        this.TipoDef.push(newTipo);
+    }
     getFuncion(identificador) {
         const funcion = this.Funcion.filter(funcion => funcion.id === identificador)[0];
         if (funcion) {
@@ -70,6 +89,16 @@ class SymTable {
         if (arreglo) return arreglo;
         else return "ERROR";
     }
+    getType(identificador){
+        const tipo = this.Tipo.filter(tipo => tipo.id === identificador)[0];
+        if (tipo) return tipo;
+        else return "ERROR";
+    }
+    getTypeDef(identificador){
+        const tipo = this.TipoDef.filter(tipo => tipo.id === identificador)[0];
+        if (tipo) return tipo;
+        else return "ERROR";
+    }
 
     ActSimbolo(identificador, Symbol) {
         for (let i = 0; i < this.Symbol.length; i++) {
@@ -80,10 +109,24 @@ class SymTable {
             }
         }
         return false;
-
-
-
-
+    }
+    ActArreglo(identificador,Arreglo){
+        for(let i = 0;i<this.Arreglo.length;i++){
+            if(this.Arreglo[i].id=identificador){
+                this.Arreglo[i] = Arreglo;
+                return true;
+            }
+        }
+        return false;
+    }
+    ActType(identificador,Type){
+        for(let i = 0;i<this.Tipo.length;i++){
+            if(this.Tipo[i].id=identificador){
+                this.Tipo[i] = Type;
+                return true;
+            }
+        }
+        return false;
     }
 
 }

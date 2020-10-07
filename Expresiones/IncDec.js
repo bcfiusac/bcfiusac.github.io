@@ -18,7 +18,7 @@ function IncDecD(Instruccion, tabSym) {
             else break;
         }
         if (simbolillo != "ERROR") {
-            console.log("SI SE PUEDE HACER :V");
+            //console.log("SI SE PUEDE HACER :V");
             if (simbolillo.editar) {
                 if (simbolillo.tipo === "Numero") {
                     if (Instruccion.signo === "++") {//incremento
@@ -32,12 +32,17 @@ function IncDecD(Instruccion, tabSym) {
 
                 }
                 else {
-                    console.log("NO SE PUEDE INCREMENTAR/DECREMENTAR UNA CADENA O BOOL");
+                    //console.log("NO SE PUEDE INCREMENTAR/DECREMENTAR UNA CADENA O BOOL");
+                    const error = Error('Semantico', 'NO SE PUEDE INCREMENTAR/DECREMENTAR UNA CADENA O BOOL: ' + Instruccion.id);
+                        Horrores.push(error);
+                    
                 }
             }
         }
         else {
-            console.log("NO SE CUENTRA LA VARIABLE A INCREMENTAR/DECREMENTAR");
+            //console.log("NO SE CUENTRA LA VARIABLE A INCREMENTAR/DECREMENTAR");
+            const error = Error('Semantico', 'NO SE ENCUENTRA LA VARIABLE: ' + Instruccion.id);
+                        Horrores.push(error);
         }
 
 
@@ -59,7 +64,9 @@ function IncDecD(Instruccion, tabSym) {
 
                 }
                 else {
-                    console.log("NO SE PUEDE INCREMENTAR/DECREMENTAR UNA CADENA O BOOL");
+                    //console.log("NO SE PUEDE INCREMENTAR/DECREMENTAR UNA CADENA O BOOL");
+                    const error = Error('Semantico', 'NO SE PUEDE INCREMENTAR/DECREMENTAR UNA CADENA O BOOL: ' + Instruccion.id);
+                        Horrores.push(error);
                 }
             }
 

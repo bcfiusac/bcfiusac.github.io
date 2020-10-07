@@ -10,7 +10,7 @@ function WhileD(Instruccion,tabSym){
     //nueva tabla de simbolos acá
     let res = null;
     probador = Instruccion;
-    console.log("HOLA JEJEJEJE");
+    //console.log("HOLA JEJEJEJE");
     sentencias = Instruccion.sentencias;
     condicion = Instruccion.expresion;
     let validarCondicion;
@@ -53,6 +53,6 @@ function WhileD(Instruccion,tabSym){
         }
         while(validarCondicion)
     }
-    else console.log("NO SE ENTRA AL CICLO, NO CUMPLE");
+    //else console.log("NO SE ENTRA AL CICLO, NO CUMPLE");
     
 }

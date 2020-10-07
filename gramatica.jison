@@ -49,6 +49,7 @@
 "&&"				return 'And';
 "||"				return 'Or';
 "!"					return 'Not';
+"$"					return 'Dolar';
 
 
 "void"				return 'Void';
@@ -81,6 +82,7 @@
 "graficar_ts"		return 'Graficar';
 "type"				return 'Type';
 "default"			return 'Default';
+"null"				return 'Null';
 
 
 
@@ -107,7 +109,7 @@
 %left And Or
 %left Comparacion Diferente
 %nonassoc Menor Mayor MenorIgual MayorIgual 
-%left 'MAS' 'MENOS' 'DosPuntos'
+%left 'MAS' 'MENOS'
 %left 'POR' 'DIVIDIDO' 'Modulo'
 %left 'Potencia' 
 %left PARIZQ PARDER 
@@ -125,8 +127,9 @@ sentencias: sentencia sentencias {$$ = $2;$$.unshift($1);}| sentencia {$$ = [$1]
 //-------------ASIGNACION - DECLARACIÓN DE VARIABLES SIMPLES
 TipoVar : Let {$$ = true;}| Const {$$ = false;};
 TiposVars: Number | Boolean | String | IDENTIFICADOR | Void ;
-sentencia: decAsign PTCOMA {$$ = $1;} | Asignacion {$$ = $1;} | Print{$$ = $1;} | Funcion {$$=$1;} | Retorno {$$=$1;} | IFS {$$=$1;} | SUICH {$$=$1;} | Breik {$$=$1;} | LLamadaEjec PTCOMA {$$=$1;} | Continuar {$$=$1;}
-		| IncDec PTCOMA {$$=$1;} | Wail {$$=$1;} |DuWail{$$=$1;} | ForNormal {$$=$1;} | Grafica {$$=$1;} |error {
+TresBasicos : Number | Boolean | String;
+sentencia: decAsign PTCOMA {$$ = $1;} |decAsignType PTCOMA {$$=$1;}|decAsignArray PTCOMA {$$=$1;}| Asignacion {$$ = $1;} | Print{$$ = $1;} | Funcion {$$=$1;} | Retorno {$$=$1;} | IFS {$$=$1;} | SUICH {$$=$1;} | Breik {$$=$1;} | LLamadaEjec PTCOMA {$$=$1;} | Continuar {$$=$1;}
+		| IncDec PTCOMA {$$=$1;} | Wail {$$=$1;} |DuWail{$$=$1;} | ForNormal {$$=$1;} | Grafica {$$=$1;} |Tipos {$$=$1;}|error {
 	const error = Error ('Sintactico',yytext ,this._$.first_line,this._$.first_column);
 	Horrores.push(error);};
 Grafica: Graficar PARIZQ PARDER PTCOMA {$$=Graficar();};
@@ -135,22 +138,35 @@ decAsign: TipoVar IDENTIFICADOR DosPuntos Number Igual expresion   {$$ = Declara
 			|TipoVar IDENTIFICADOR DosPuntos Boolean Igual expresion  {$$ = Declaracion($1, $2, $4, $6);}
 			|TipoVar IDENTIFICADOR DosPuntos String Igual expresion  {$$=Declaracion($1, $2, $4, $6);}
 			|TipoVar IDENTIFICADOR Igual expresion  {$$=Declaracion($1,$2,0,$4);}
-			|TipoVar IDENTIFICADOR DosPuntos TiposVars Dimension Igual CORIZQ ValsArray CORDER {$$=DecArreglo($1,$2,$4,$8)} ; 
-
+			|TipoVar IDENTIFICADOR DosPuntos TiposVars Dimension Igual CORIZQ ValsArray CORDER {$$=DecArreglo($1,$2,$4,$8)}; 
+			//|Tipos {$$=$1;}; 
+decAsignType: TipoVar IDENTIFICADOR DosPuntos IDENTIFICADOR Igual LlaveI ParamsTipo LLaveD {$$=Declaracion($1, $2, $4, $7);};
+decAsignArray: TipoVar IDENTIFICADOR DosPuntos TiposVars Dimension {$$=DecArreglo($1,$2,$4,0);};
 //Expresiones: tipoBool | expresion | CADENA;
 //tipoBool: Trues | Falses;
 //BoolValues: tipoBool | expresion;
 //StringValues: CADENA | expresion;
 ValsArray: ValsArray Coma expresion {$1.push($3);$$=$1;} | expresion {$$=[$1];}| {$$=[];};
+
+
+//COMIENZAN LOS TIPOS
 TipoDef:Number | Boolean | String;
-ParamTipo: IDENTIFICADOR DosPuntos expresion | IDENTIFICADOR DosPuntos TipoDef;
-ParamsTipo: ParamsTipo Coma ParamTipo | ParamTipo;
-//Tipos: Type IDENTIFICADOR Igual LlaveI ParamsTipo LLaveD PTCOMA;
+ParamTipo: IDENTIFICADOR DosPuntos expresion {$$= ParamTipo($1,$3);} | IDENTIFICADOR DosPuntos TipoDef {$$= ParamTipo($1,$3);};
+ParamsTipo: ParamsTipo Coma ParamTipo {$1.push($3);$$=$1;} | ParamTipo {$$=[$1];};
+Tipos: Type IDENTIFICADOR Igual LlaveI ParamsTipo LLaveD PTCOMA {$$=Tipo($2,$5,true);};
+//AsignTipo : ;
+//TERMINAN LOS TIPOS
+
+
 IncDec: IDENTIFICADOR signIncDec {$$ = IncDec($1,$2);};
 signIncDec: Incremento | Decremento;
-Asignacion: IDENTIFICADOR IgualMasIgual expresion PTCOMA {$$=Asignacion($1,$2,$3);};
+Asignacion: IDENTIFICADOR IgualMasIgual expresion PTCOMA {$$=Asignacion($1,$2,$3);}
+			|AccesoAtributo IgualMasIgual expresion PTCOMA {$$=Asignacion($1,$2,$3);}
+			|AccesoMatrix IgualMasIgual expresion PTCOMA {$$=Asignacion($1,$2,$3);}
+			|IDENTIFICADOR Igual LlaveI ParamsTipo LLaveD PTCOMA {$$=Asignacion($1,"xd",$4);};
 IgualMasIgual: Igual | MasI;
-Print : Console Punto Log PARIZQ expresion PARDER PTCOMA {$$ = Imprimir($5);};
+Print : Console Punto Log PARIZQ expresion PARDER PTCOMA {$$ = Imprimir($5);}
+		|Dolar LlaveI expresion LLaveD PTCOMA {$$=Imprimir($3);};
 //Anidados: Anidados MAS Anidado {$1.push($3);$$ = $1;} | Anidado sentencia {$$ = [$1];};
 //Anidado: ENTERO | DECIMAL | CADENA | IDENTIFICADOR | LLamadaEjec;
 Funcion: Function IDENTIFICADOR PARIZQ ParamsEntrada PARDER DosPuntos TiposVars LlaveI sentencias LLaveD
@@ -233,9 +249,10 @@ expresion
 	| ENTERO                        { $$ = AritmeticaConst(primitivos.Numero,$1,this._$.first_line,this._$.first_column); }
 	| DECIMAL                       { $$ = AritmeticaConst(primitivos.Numero,$1,this._$.first_line,this._$.first_column); }
 	| IDENTIFICADOR					{ $$ = AritmeticaConst(primitivos.Identificador,$1,this._$.first_line,this._$.first_column); }
+	| Null							{ $$ = AritmeticaConst(primitivos.Null,$1,this._$.first_line,this._$.first_column); }
 	| LLamadaEjec					{ $$ = AritmeticaConst(primitivos.LLamarFuncion,$1,this._$.first_line,this._$.first_column); }	
 	| AccesoMatrix					{ $$ = AritmeticaConst(primitivos.AccesoMatrix,$1,this._$.first_line,this._$.first_column);}
-	| AccesoAtributo
+	| AccesoAtributo				{ $$ = AritmeticaConst(primitivos.AccesoAtributo,$1,this._$.first_line,this._$.first_column);}
 	| CADENA						{ $$ = AritmeticaConst(primitivos.Cadena,$1,this._$.first_line,this._$.first_column); }
 	| Trues							{ $$ = AritmeticaConst(primitivos.Booleano,true,this._$.first_line,this._$.first_column); }
 	| Falses						{ $$ = AritmeticaConst(primitivos.Booleano,false,this._$.first_line,this._$.first_column); }
@@ -246,7 +263,8 @@ expresion
 ListaExp: expresion Coma ListaExp {$$=$3;$$.unshift($1);} | expresion {$$=[$1];} | {$$=[];} ;
 LLamadaEjec: IDENTIFICADOR PARIZQ ListaExp PARDER {$$=LlamarF($1,$3);};
 AccesoMatrix: IDENTIFICADOR DimensionVal {$$=AccesoMatrix($1,$2);}| IDENTIFICADOR Punto Length {$$=AccesoMatrix($1,$2);};
-AccesoAtributo: IDENTIFICADOR Punto IDENTIFICADOR;
+//AccesoAtributos: AccesoAtributos Punto IDENTIFICADOR {$1.push($3);$$=$1;} | IDENTIFICADOR {$$=[$1];}; 
+AccesoAtributo: IDENTIFICADOR Punto IDENTIFICADOR {$$ = AccesoAt($1,$3,-1);} | IDENTIFICADOR Punto IDENTIFICADOR Punto IDENTIFICADOR {$$ = AccesoAt($1,$3,$5);};
 DimensionesVal: DimensionesVal DimensionVal|DimensionVal;
 DimensionVal: CORIZQ expresion CORDER {$$=$2;};
 MatrixSen: IDENTIFICADOR DimensionesVal Igual Dimensiones PTCOMA | IDENTIFICADOR DimensionesVal Igual expresion PTCOMA; 

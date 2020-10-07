@@ -8,7 +8,7 @@ function Switch(expresion, casos){
 }
 
 function SwitchD(Instruccion, tabSym){
-console.log("ENCONTRE UN SWITCH :v");
+//console.log("ENCONTRE UN SWITCH :v");
 let findValor;
 let findTipo;
 if (Instruccion.expresion.Type === primitivos.LLamarFuncion) {
@@ -22,7 +22,7 @@ else {
 }
 ValorBuscado = findValor;
 tipoBuscado = findTipo;
-console.log("hola");
+//console.log("hola");
 contadorDefaults=0;
 bandera = 0;
 banderabreik = false;
@@ -30,7 +30,7 @@ match = 0;
 breik = -1;
 for(let i = 0;i<Instruccion.casos.length;i++){
     if(Instruccion.casos[i].expresion===0){
-        console.log("ENCONTRE UN DEFAULT");
+        //console.log("ENCONTRE UN DEFAULT");
         contadorDefaults++;
             
     }
@@ -41,12 +41,12 @@ for(let i = 0;i<Instruccion.casos.length;i++){
         valorCase = getValor(Instruccion.casos[i].expresion,tabSym);
         tipoCase = getTipo(Instruccion.casos[i].expresion,tabSym);
         if(ValorBuscado===valorCase && tipoBuscado===tipoCase){
-            console.log("HE ENCONTRADO UN CASE QUE HACE MATCH");
+            //console.log("HE ENCONTRADO UN CASE QUE HACE MATCH");
             bandera = true;//la instrucción que hace match
             //arbolR(Instruccion.casos[i].sentencias,tabSym);
             for(let x = 0;x<Instruccion.casos[i].sentencias.length;x++){
                 if(Instruccion.casos[i].sentencias[x].Type===instruccionesC.Breik){
-                    console.log("HE ENCONTRADO UN BREAK DENTRO DEL CASE");
+                    //console.log("HE ENCONTRADO UN BREAK DENTRO DEL CASE");
                     banderabreik = true;
                     break;
                     
@@ -66,9 +66,9 @@ for(let i = 0;i<Instruccion.casos.length;i++){
     }
 }
 if(!bandera){
-    console.log("NINGUN CASE HA HECHO MATCH");
+    //console.log("NINGUN CASE HA HECHO MATCH");
     if(contadorDefaults>0){
-        console.log("PERO EXISTE UN DEFAULT POR EJECUTAR");
+        //console.log("PERO EXISTE UN DEFAULT POR EJECUTAR");
         //EJECUTAR SENTENCIAS DEL DEFAULT
         for(let i = 0;i<Instruccion.casos.length;i++){
             if(Instruccion.casos[i].expresion===0){
@@ -79,10 +79,10 @@ if(!bandera){
         }
     }
     else{
-        console.log("NO HAY DEFAULT NI CASE QUE HAGA MATCH");
+       // console.log("NO HAY DEFAULT NI CASE QUE HAGA MATCH");
+        const error = Error('Semantico', 'NINGUN CASE QUE HAGA MATCH O DEFAULT');
+                        Horrores.push(error);
     }
 }
-else{
-    console.log("YA HIZO MATCH CON UN CASE");//falta enviar a ejectuar las sentencias de ese case :'v
-}
+
 }

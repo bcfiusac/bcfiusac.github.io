@@ -8,10 +8,10 @@ function Si(expr, bloque, demas) {
     }
 }
 function SiD(Instruccion, tabSym) {
-    const nueva = new SymTable([], [], tabSym);
+    const nueva = new SymTable([], [],[],[],[], tabSym);
     let res = null;
     prueba = Instruccion;
-    console.log("LLEGUE ACA JEJEJEJE");
+    //console.log("LLEGUE ACA JEJEJEJE");
     
             let valor;
             let tipo;
@@ -30,6 +30,10 @@ function SiD(Instruccion, tabSym) {
     if (booleano && tipo===primitivos.Booleano) {
         //console.log("es cierto");
         res = arbolR(Instruccion.bloque, nueva);
+    }
+    else if(tipo!=primitivos.Booleano){
+        const error = Error('Semantico', 'CONDICION DEL IF DIFERENTE A UN BOOLEANO: ',Instruccion.expr.Column,Instruccion.expr.Row);
+                        Horrores.push(error);
     }
     else {
         //console.log("es mentira");

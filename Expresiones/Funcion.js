@@ -9,6 +9,6 @@ function Funcion(id,Parametros,tipoF,sentencias){
 }
 
 function FuncionD(Instruccion, tabSym){
-console.log("ESTOY EN LA FUNCION");
+//console.log("ESTOY EN LA FUNCION");
 tabSym.setearFuncion();
 }
